@@ -39,6 +39,12 @@ kxmall项目结构:
 
 
 ---
+- H5客户端
+  - 后台演示地址: [http://116.62.17.100:8686](http://116.62.17.100:8686)
+  - 登录名:13333333333 验证码:666666 
+  - 客户端由于调用地图需要https，所以程序目前固定id为11仓库
+- Pages
+
 | 河禾生鲜 | 河禾生鲜 | 河禾生鲜 |
 | :----: | :----: | :----: |
 | ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-app-1.jpeg)  | ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-app-2.jpeg) | ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-app-3.jpeg) |
@@ -50,6 +56,11 @@ kxmall项目结构:
 
 
 ---
+- Admin
+  - 后台演示地址: [http://116.62.17.100](http://116.62.17.100)
+  - 登录名:guest 密码:123456 (guest仅有只读权限，无读配置权限)
+  - 登录名(超级管理员):admin (需要体验的，密码可以找群主拿，QQ群：865607763)
+- Pages
  
 ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-admin-1.png)  
 ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-admin-2.png)  
