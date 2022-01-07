@@ -14,6 +14,7 @@ kxmall项目结构:
     - kxmall-admin: 启动器（打包打这个就行）
     - kxmall-admin-api: 提供管理员管理系统的WebApi
     - kxmall-app-api: 提供APP、小程序、H5用户请求的WebApi
+    - kxmall-rider-api: 提供骑手APP、小程序、H5用户请求的WebApi
     - kxmall-biz: 提供通用业务代码
     - kxmall-data: 提供数据模型以及数据访问层封装
     - kxmall-core: 提供注解、工具类等
@@ -21,6 +22,7 @@ kxmall项目结构:
 - Vue 前端页面
     - kxmall-admin-ui: 基于element-ui的后台管理页面
     - kxmall-app-ui: 基于uniapp的小程序、H5、APP前端代码
+    - kxmall-rider-ui: 基于uniapp的小程序、H5、APP骑手代码
 
 - sql: 数据库初始化SQL脚本
 
@@ -40,7 +42,7 @@ kxmall项目结构:
 
 ---
 - H5客户端
-  - 后台演示地址: [http://116.62.17.100:8686](http://116.62.17.100:8686)
+  - 演示地址: [http://116.62.17.100:8686](http://116.62.17.100:8686)
   - 登录名:13333333333 验证码:666666 
   - 客户端由于调用地图需要https，所以程序目前固定id为11仓库
 - Pages
@@ -56,8 +58,8 @@ kxmall项目结构:
 
 
 ---
-- Admin
-  - 后台演示地址: [http://116.62.17.100](http://116.62.17.100)
+- Admin后台
+  - 演示地址: [http://116.62.17.100](http://116.62.17.100)
   - 登录名:guest 密码:123456 (guest仅有只读权限，无读配置权限)
   - 登录名(超级管理员):admin (需要体验的，密码可以找群主拿，QQ群：865607763)
 - Pages
@@ -66,7 +68,18 @@ kxmall项目结构:
 ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-admin-2.png)  
 ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-admin-3.png)   
 
-- 登录名:guest   密码:123456   验证码:666666 (guest仅有只读权限)
+
+#### 骑手端系统演示
+
+---
+- 骑手后台
+  - 演示地址: [http://116.62.17.100:8787](http://116.62.17.100:8787)
+  - 登录名:16666666666 验证码:123456 
+- Pages
+
+| 河禾生鲜 | 河禾生鲜 | 河禾生鲜 |
+| :----: | :----: | :----: |
+| ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-rider-1.jpg)  | ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-rider-2.jpg) | ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-rider-3.jpg) |
 
 
 #### 项目部署方式
@@ -85,34 +98,20 @@ kxmall项目结构:
 |  Redis   |  4.0.1（其他也可以）   |
 |  Nginx  |  只要Web容器就可以了  |
 
-请参考 [CentOS7.4 安装 MySQL5.7](https://github.com/iotechn/document-basic/blob/master/CentOS7.4_Install_MySQL5.7.md)
-
-请参考 [CentOS 安装 JDK8](https://github.com/iotechn/document-basic/blob/master/CentOS_Install_JDK8.md)
-
-请参照CentOS [安装 NodeJs 8.15.0](https://github.com/iotechn/document-basic/blob/master/CentOS_Install_NodeJS_8.15.0.md)
-
 Redis安装可直接使用yum安装 
 	
 	yum install redis
 
 安装完成后使用 redis-cli 命令，若能进入，则表示redis安装完成
 
-##### ② 后台管理系统编译运行指南
-
-[编译运行指南](doc/run.md)
-
-##### ③ 编译部署前后端代码
-
-项目部署分为 Admin/App Server 、 App 、 Admin  三个部分
-
-[部署Step1:Java后台编译&部署](doc/server.md)    
-
 1.服务器安装必备软件[JDK | mysql | Redis | Nginx]   
 2.启动服务 
 
-[部署Step2:App编译打包](doc/app.md)
+[部署Step:App编译打包](doc/run_jar.sh)
 
-[部署Step3:Admin编译打包](doc/admin.md)
+本地部署文档
+
+[kxmall本地项目启动文档](doc/kxmall本地项目启动文档.doc)
 
 
 #### 版权声明
