@@ -25,7 +25,8 @@ kxmall项目结构:
     - kxmall-rider-ui: 基于uniapp的小程序、H5、APP骑手代码
 
 - sql: 数据库初始化SQL脚本
-
+* 阿里云折扣场：[点我进入](https://www.aliyun.com/minisite/goods?userCode=gclm7a7u)&nbsp;&nbsp;
+* 腾讯云秒杀场：[点我进入](https://curl.qcloud.com/6iRoSBvc)&nbsp;&nbsp;
 #### 数据库初始化sql文件，请进入讨论交流群，群文件自行下载，欢迎讨论与交流
 ---
 #### 优先更新地址
@@ -41,7 +42,7 @@ kxmall项目结构:
 
 
 ---
-- H5客户端
+- H5客户端（可打包成小程序、APP）
   - 演示地址: [http://116.62.17.100:8686](http://116.62.17.100:8686)
   - 登录名:13333333333 验证码:666666 
   - 客户端由于调用地图需要https，所以程序目前固定id为11仓库
@@ -72,7 +73,7 @@ kxmall项目结构:
 #### 骑手端系统演示
 
 ---
-- 骑手后台
+- h5骑手后台（可打包成小程序、APP）
   - 演示地址: [http://116.62.17.100:8787](http://116.62.17.100:8787)
   - 登录名:16666666666 验证码:123456 
 - Pages
@@ -88,7 +89,8 @@ kxmall项目结构:
 
 ##### ⓪ 服务器推荐
 服务器可根据自身业务来选购，单机环境推荐2C4G
-
+* 阿里云折扣场：[点我进入](https://www.aliyun.com/minisite/goods?userCode=gclm7a7u)&nbsp;&nbsp;
+* 腾讯云秒杀场：[点我进入](https://curl.qcloud.com/6iRoSBvc)&nbsp;&nbsp;
 ##### ① 基础运行环境
 
 | 运行环境 | 版本号 |
