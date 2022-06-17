@@ -25,8 +25,10 @@ kxmall项目结构:
     - kxmall-rider-ui: 基于uniapp的小程序、H5、APP骑手代码
 
 - sql: 数据库初始化SQL脚本
+
 * 阿里云折扣场：[点我进入](https://www.aliyun.com/minisite/goods?userCode=gclm7a7u)&nbsp;&nbsp;
-* 腾讯云秒杀场：[点我进入](https://curl.qcloud.com/6iRoSBvc)&nbsp;&nbsp;
+* 腾讯云秒杀场：[点我进入](https://curl.qcloud.com/XslPhodG)&nbsp;&nbsp;
+
 #### 数据库初始化sql文件，请进入讨论交流群，群文件自行下载，欢迎讨论与交流
 ---
 #### 优先更新地址
@@ -43,7 +45,7 @@ kxmall项目结构:
 
 ---
 - H5客户端（可打包成小程序、APP）
-  - 演示地址: [http://116.62.17.100:8686](http://116.62.17.100:8686)
+  - 演示地址: [http://h5.kxmall.vip](http://h5.kxmall.vip)
   - 登录名:13333333333 验证码:666666 
   - 客户端由于调用地图需要https，所以程序目前固定id为11仓库
 - Pages
@@ -60,7 +62,7 @@ kxmall项目结构:
 
 ---
 - Admin后台
-  - 演示地址: [http://116.62.17.100](http://116.62.17.100)
+  - 演示地址: [http://www.kxmall.vip](http://www.kxmall.vip)
   - 登录名:guest 密码:123456 (guest仅有只读权限，无读配置权限)
   - 登录名(超级管理员):admin (需要体验的，密码可以找群主拿，QQ群：865607763)
 - Pages
@@ -74,7 +76,7 @@ kxmall项目结构:
 
 ---
 - h5骑手后台（可打包成小程序、APP）
-  - 演示地址: [http://116.62.17.100:8787](http://116.62.17.100:8787)
+  - 演示地址: [http://rider.kxmall.vip](http://rider.kxmall.vip)
   - 登录名:16666666666 验证码:123456 
 - Pages
 
@@ -86,11 +88,11 @@ kxmall项目结构:
 #### 项目部署方式
 
 >项目部署
-
 ##### ⓪ 服务器推荐
 服务器可根据自身业务来选购，单机环境推荐2C4G
 * 阿里云折扣场：[点我进入](https://www.aliyun.com/minisite/goods?userCode=gclm7a7u)&nbsp;&nbsp;
-* 腾讯云秒杀场：[点我进入](https://curl.qcloud.com/6iRoSBvc)&nbsp;&nbsp;
+* 腾讯云秒杀场：[点我进入](https://curl.qcloud.com/XslPhodG)&nbsp;&nbsp;
+
 ##### ① 基础运行环境
 
 | 运行环境 | 版本号 |
@@ -106,10 +108,7 @@ Redis安装可直接使用yum安装
 
 安装完成后使用 redis-cli 命令，若能进入，则表示redis安装完成
 
-1.服务器安装必备软件[JDK | mysql | Redis | Nginx]   
-2.启动服务 
-
-[部署Step:App编译打包](doc/run_jar.sh)
+1.服务器安装必备软件[JDK | mysql | Redis | Nginx]
 
 本地部署文档
 
@@ -118,14 +117,8 @@ Redis安装可直接使用yum安装
 
 #### 版权声明
 
-本项目后端由云伴工作室开发，禁止未经授权用于商业用途。个人学习可免费使用。如需商业授权-授权针对前段代码和后端代码商用授权，进QQ讨论群（865607763）联系群主。
+本项目后端由云伴工作室开发，禁止未经授权用于商业用途。个人学习可免费使用，进QQ讨论群（865607763）联系群主。
 
-
-### 更多服务
-
-### 项目定制开发服务
-
-俗称外包，请加文档顶部的群，联系群主或者管理员（外包不仅限于线上商城）。
 
 ### SaaS服务
 
