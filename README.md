@@ -1,8 +1,10 @@
 > kxmall 针对中小商户、企业和个人学习者开发。使用Java编码，采用SpringBoot、Mybatis-Plus等易用框架，适合个人学习研究。同时支持单机部署、集群部署，用户与店铺范围动态定位，中小商户企业可根据业务动态扩容。kxmall使用uniapp前端框架，可同时编译到 微信小程序、H5、Android App、iOS App等几个平台，可为中小商户企业节约大量维护成本。也可支撑中小商户企业前期平台横扩需求。
 
 ---
-QQ讨论群：865607763 (进群前，请在网页右上角点star)
+QQ讨论群：865607763 (已满)
+
 ---
+QQ讨论群：432259672 (进群前，请在网页右上角点star)
 
 #### 数据库初始化sql文件，请进入讨论交流群，群文件自行下载，欢迎讨论与交流
 ---
@@ -64,12 +66,13 @@ kxmall项目结构:
 - Admin后台
   - 演示地址: [http://www.kxmall.vip](http://www.kxmall.vip)
   - 登录名:guest 密码:123456 (guest仅有只读权限，无读配置权限)
-  - 登录名(超级管理员):admin (需要体验的，密码可以找群主拿，QQ群：865607763)
+  - 登录名(超级管理员):admin (需要体验的，密码可以找群主拿，QQ群：432259672)
 - Pages
  
 ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-admin-1.png)  
 ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-admin-2.png)  
 ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-admin-3.png)   
+![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-admin-4.jpg)   
 
 
 #### 骑手端系统演示
@@ -117,7 +120,7 @@ Redis安装可直接使用yum安装
 
 #### 版权声明
 
-本项目后端由云伴工作室开发，禁止未经授权用于商业用途。个人学习可免费使用，进QQ讨论群（865607763）联系群主。
+本项目后端由云伴工作室开发，禁止未经授权用于商业用途。个人学习可免费使用，进QQ讨论群（432259672）联系群主。
 
 
 ### SaaS服务
