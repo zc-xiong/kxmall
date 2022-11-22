@@ -3,6 +3,14 @@
     <!-- 查询和其他操作 -->
     <div class="filter-container">
       <el-select
+        v-model="listQuery.adType"
+        style="width: 200px"
+        class="filter-item"
+        placeholder="请选择广告类型"
+      >
+        <el-option v-for="(key,index) in adTypeMap" :key="index" :label="key.name" :value="key.value" />
+      </el-select>
+      <el-select
         v-model="listQuery.status"
         style="width: 200px"
         class="filter-item"
@@ -12,14 +20,6 @@
       >
         <el-option v-for="(key,index) in adStatusMap" :key="index" :label="key.name" :value="key.value" />
       </el-select>
-      <!-- <el-select
-        v-model="listQuery.adType"
-        style="width: 200px"
-        class="filter-item"
-        placeholder="请选择广告类型"
-      >
-        <el-option v-for="(key,index) in adTypeMap" :key="index" :label="key.name" :value="key.value" />
-      </el-select> -->
       <el-button
         v-permission="['admin:advertisement:queryAdvertisement']"
         class="filter-item"
@@ -128,7 +128,7 @@
           </el-upload>
         </el-form-item>
         <el-form-item label="广告类型" prop="adType">
-          <el-select :disabled="true" v-model="dataForm.adType" clearable filterable placeholder="请选择">
+          <el-select v-model="dataForm.adType" clearable filterable placeholder="请选择">
             <el-option v-for="(key, index) in adTypeMap" :key="index" :label="key.name" :value="key.value" />
           </el-select>
         </el-form-item>
@@ -138,17 +138,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="活动链接">
-          <el-cascader
-            :options="options"
-            :props="{ checkStrictly: true }"
-            v-model="linkUnion"
-            placeholder="关联类目、商品"
-            filterable
-            clearable
-            style="width:300px"
-            @change="handleLink"
-          />
-          <el-input v-model="userLinkUnion" placeholder="请输入活动连接" class="cascaderInput" size="small" clearable @change="userValueChange" ></el-input>
+          <el-input v-model="userLinkUnion" placeholder="请输入活动连接" clearable></el-input>
         </el-form-item>
         <el-form-item label="站外链接">
           <el-input v-model="dataForm.outUrl" clearable />
@@ -221,8 +211,7 @@ const adTypeMap = [
   { value: 6, unionType: 1, name: '首页图片' },
   { value: 7, unionType: 1, name: '分类图片' },
   { value: 8, unionType: 1, name: '个人中心' },
-  { value: 9, unionType: 1, name: '特价列表' },
-  { value: '', name: '全部' }
+  { value: 9, unionType: 1, name: '特价列表' }
 ]
 const adStatusMap = [{ value: 0, name: '冻结' }, { value: 1, name: '激活' }, { value: '', name: '全部' }]
 
@@ -301,9 +290,6 @@ export default {
     }
   },
   created() {
-    const [, adType] = this.$route.path.split('_')
-    this.listQuery.adType = Number(adType)
-    this.dataForm.adType = this.listQuery.adType
     this.getList()
   },
   methods: {
@@ -358,6 +344,7 @@ export default {
         imgUrl: undefined,
         status: undefined,
         color: undefined,
+        userLinkUnion: '',
         outUrl: ''
       }
       this.linkUnion = undefined
@@ -412,6 +399,7 @@ export default {
       this.dataForm.imgUrl = response.url
     },
     createData() {
+      this.dataForm.url = this.userLinkUnion
       this.$refs['dataForm'].validate(valid => {
         if (valid && this.checkAdType()) {
           createAd(this.dataForm)
@@ -434,34 +422,34 @@ export default {
     },
     checkAdType() {
       // 如果是用户自己填的活动链接 则不需要经过验证
-      if (this.useUser) return true
-      // 检测关联选项是否是三级目录或商品
-      if (this.linkUnion === undefined || this.linkUnion === null || this.linkUnion.length < 2) {
-        this.$notify.error({
-          title: '失败',
-          message: '请关联二级目录或者商品'
-        })
-        return false
-      }
-
-      for (let i = 0; i < this.adTypeMap.length; i++) {
-        const item = this.adTypeMap[i]
-        if (item.value === this.dataForm.adType) {
-          if (item.unionType === 1 && this.linkUnion.length === 4) {
-            this.$notify.error({
-              title: '失败',
-              message: '此类广告只能关联二级类目'
-            })
-            return false
-          } else if (this.unionType === 2 && this.linkUnion.length === 3) {
-            this.$notify.error({
-              title: '失败',
-              message: '此类广告只能关联商品'
-            })
-            return false
-          }
-        }
-      }
+      // if (this.useUser) return true
+      // // 检测关联选项是否是三级目录或商品
+      // if (this.linkUnion === undefined || this.linkUnion === null || this.linkUnion.length < 2) {
+      //   this.$notify.error({
+      //     title: '失败',
+      //     message: '请关联二级目录或者商品'
+      //   })
+      //   return false
+      // }
+      //
+      // for (let i = 0; i < this.adTypeMap.length; i++) {
+      //   const item = this.adTypeMap[i]
+      //   if (item.value === this.dataForm.adType) {
+      //     if (item.unionType === 1 && this.linkUnion.length === 4) {
+      //       this.$notify.error({
+      //         title: '失败',
+      //         message: '此类广告只能关联二级类目'
+      //       })
+      //       return false
+      //     } else if (this.unionType === 2 && this.linkUnion.length === 3) {
+      //       this.$notify.error({
+      //         title: '失败',
+      //         message: '此类广告只能关联商品'
+      //       })
+      //       return false
+      //     }
+      //   }
+      // }
       return true
     },
     // 点击编辑按钮时的处理

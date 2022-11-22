@@ -57,10 +57,12 @@
       <el-table-column
         prop="spuDO.title"
         align="center"
+        show-overflow-tooltip
         label="商品名称"/>
       <el-table-column
         prop="skuDTO.title"
         align="center"
+        show-overflow-tooltip
         label="商品规格"/>
       <el-table-column
         align="center"
@@ -185,7 +187,7 @@ export default {
   data() {
     return {
       name: '',
-      pageSize: 20,
+      pageSize: 10,
       total: 0,
       priceList: [],
       editPrice: [],

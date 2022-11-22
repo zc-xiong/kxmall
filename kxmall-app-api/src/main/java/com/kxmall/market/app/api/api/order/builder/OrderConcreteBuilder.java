@@ -1,36 +1,22 @@
 package com.kxmall.market.app.api.api.order.builder;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.kxmall.market.app.api.api.order.OrderServiceImpl;
 import com.kxmall.market.app.api.api.category.CategoryService;
-import com.kxmall.market.biz.service.freight.FreightBizService;
-import com.kxmall.market.biz.service.groupshop.GroupShopBizService;
+import com.kxmall.market.app.api.api.order.OrderServiceImpl;
 import com.kxmall.market.biz.service.orderobserve.OrderObserveAble;
 import com.kxmall.market.biz.service.orderobserve.OrderUpdater;
 import com.kxmall.market.core.exception.AppServiceException;
 import com.kxmall.market.core.exception.ExceptionDefinition;
 import com.kxmall.market.core.exception.ServiceException;
 import com.kxmall.market.core.util.GeneratorUtil;
-import com.kxmall.market.data.domain.AddressDO;
-import com.kxmall.market.data.domain.CartDO;
-import com.kxmall.market.data.domain.GroupShopSkuDO;
-import com.kxmall.market.data.domain.OrderDO;
-import com.kxmall.market.data.domain.OrderSkuDO;
-import com.kxmall.market.data.domain.UserCouponDO;
+import com.kxmall.market.data.domain.*;
 import com.kxmall.market.data.dto.UserCouponDTO;
-import com.kxmall.market.data.dto.goods.GroupShopDTO;
 import com.kxmall.market.data.dto.goods.SkuDTO;
 import com.kxmall.market.data.dto.order.OrderPriceDTO;
 import com.kxmall.market.data.dto.order.OrderRequestDTO;
 import com.kxmall.market.data.dto.order.OrderRequestSkuDTO;
 import com.kxmall.market.data.enums.OrderStatusType;
-import com.kxmall.market.data.enums.StatusType;
-import com.kxmall.market.data.mapper.AddressMapper;
-import com.kxmall.market.data.mapper.CartMapper;
-import com.kxmall.market.data.mapper.OrderMapper;
-import com.kxmall.market.data.mapper.OrderSkuMapper;
-import com.kxmall.market.data.mapper.SkuMapper;
-import com.kxmall.market.data.mapper.UserCouponMapper;
+import com.kxmall.market.data.mapper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,12 +64,6 @@ public class OrderConcreteBuilder extends OrderBuilder {
     @Autowired
     private CategoryService categoryService;
 
-    @Autowired
-    private FreightBizService freightBizService;
-
-    @Autowired
-    private GroupShopBizService groupShopBizService;
-
     @Value("${com.kxmall.market.machine-no}")
     private String MACHINE_NO;
 
@@ -120,23 +100,6 @@ public class OrderConcreteBuilder extends OrderBuilder {
         List<OrderRequestSkuDTO> skuList = orderRequest.getSkuList();
         Long groupShopId = orderRequest.getGroupShopId();
         Integer groupShopPrice = null;
-        if (groupShopId != null) {
-            //校验团购参数
-            if (skuList.size() > 1) {
-                throw new AppServiceException(ExceptionDefinition.ORDER_GROUP_SPU_CAN_SINGLE_TAKE);
-            }
-            GroupShopDTO groupShopDTO = groupShopBizService.getGroupShopById(groupShopId);
-            if (groupShopDTO == null || groupShopDTO.getStatus() == StatusType.LOCK.getCode()) {
-                throw new AppServiceException(ExceptionDefinition.ORDER_GROUP_SHOP_NOT_EXIST_OR_EXPIRED);
-            }
-            List<GroupShopSkuDO> groupShopSkuList = groupShopDTO.getGroupShopSkuList();
-            for (GroupShopSkuDO groupShopSkuDO : groupShopSkuList) {
-                if (groupShopSkuDO.getSkuId().equals(groupShopSkuList.get(0).getSkuId())) {
-                    //若找到交集
-                    groupShopPrice = groupShopSkuDO.getSkuGroupShopPrice();
-                }
-            }
-        }
         //商品价格
         int skuPrice = 0;
         int skuOriginalPrice = 0;
@@ -182,38 +145,9 @@ public class OrderConcreteBuilder extends OrderBuilder {
         int couponPrice = 0;
         //优惠券校验
         UserCouponDTO userCouponFromFront = orderRequest.getCoupon();
-//                if (userCouponFromFront != null) {
-//                    if (userCouponFromFront.getId() == null || userCouponFromFront.getCouponDO().getDiscount() == null) {
-//                        throw new AppServiceException(ExceptionDefinition.PARAM_CHECK_FAILED);
-//                    }
-//
-//                    UserCouponDTO userCouponFromDB = userCouponMapper.getUserCouponById(userCouponFromFront.getId(), userId);
-//
-//                    if (userCouponFromDB == null) {
-//                        throw new AppServiceException(ExceptionDefinition.ORDER_COUPON_NOT_EXIST);
-//                    }
-//
-//                    if (!userCouponFromDB.getCouponDO().getDiscount().equals(userCouponFromFront.getCouponDO().getDiscount())) {
-//                        throw new AppServiceException(ExceptionDefinition.ORDER_COUPON_DISCOUNT_CHECK_FAILED);
-//                    }
-//                    //校验优惠券策略是否满足
-//                    Long categoryId = userCouponFromDB.getCouponDO().getCategoryId();
-//                    if (categoryId != null) {
-//                        Integer p = categoryPriceMap.get(categoryId);
-//                        if (p < userCouponFromDB.getCouponDO().getMin()) {
-//                            throw new AppServiceException(ExceptionDefinition.ORDER_COUPON_PRICE_NOT_ENOUGH);
-//                        }
-//                    } else {
-//                        if (skuPrice < userCouponFromDB.getCouponDO().getMin()) {
-//                            throw new AppServiceException(ExceptionDefinition.ORDER_COUPON_PRICE_NOT_ENOUGH);
-//                        }
-//                    }
-//                    couponPrice = userCouponFromDB.getCouponDO().getDiscount();
-//                }
-        Integer freightPrice = freightBizService.getFreightMoney(orderRequest);
         //参数强校验 END
         //???是否校验actualPrice??强迫校验？
-        int actualPrice = skuPrice - couponPrice + freightPrice;
+        int actualPrice = skuPrice - couponPrice;
         OrderPriceDTO orderPriceDTO = new OrderPriceDTO();
         orderPriceDTO.setGroupShopId(groupShopId);
         orderPriceDTO.setActualPrice(actualPrice);
@@ -221,7 +155,7 @@ public class OrderConcreteBuilder extends OrderBuilder {
             orderPriceDTO.setCouponPrice(couponPrice);
             orderPriceDTO.setCouponId(orderRequest.getCoupon().getCouponDO().getId());
         }
-        orderPriceDTO.setFreightPrice(freightPrice);
+        orderPriceDTO.setFreightPrice(0);
         orderPriceDTO.setSkuTotalPrice(skuPrice);
         orderPriceDTO.setSkuIdDTOMap(skuIdDTOMap);
         orderPriceDTO.setSkuOriginalTotalPrice(skuOriginalPrice);

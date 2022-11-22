@@ -90,4 +90,6 @@ public interface StockMapper extends BaseMapper<StockDO> {
      * @return  总个数
      */
     Integer warningListByStorageCount(@Param("storageId") Long storageId, @Param("categoryId") Long categoryId, @Param("childrenIds") LinkedList<Long> childrenIds, @Param("name") String name, @Param("type") Integer type, @Param("minNum") Integer minNum, @Param("maxNum") Integer maxNum, @Param("showType") Boolean showType);
+
+    Integer updateSockForAdd(@Param("storageId") Long storageId, @Param("skuId") Integer skuId, @Param("outStockNum") Long outStockNum);
 }

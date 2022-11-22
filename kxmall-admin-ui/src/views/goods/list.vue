@@ -54,17 +54,17 @@
           >
             <el-table-column align="center" label="商品条码" prop="barCode" />
             <el-table-column align="center" label="商品规格" prop="title" />
-            <el-table-column align="center" label="商品库存" prop="stock" />
-            <el-table-column align="center" label="商品冻结库存" prop="freezeStock" />
+<!--            <el-table-column align="center" label="商品库存" prop="stock" />-->
+<!--            <el-table-column align="center" label="商品冻结库存" prop="freezeStock" />-->
             <el-table-column align="center" label="原价" prop="originalPrice" >
               <template slot-scope="scope">{{ scope.row.originalPrice /100 }}</template>
             </el-table-column>
-            <el-table-column align="center" label="现价" prop="price" >
-              <template slot-scope="scope">{{ scope.row.price /100 }}</template>
-            </el-table-column>
-            <el-table-column align="center" label="VIP价格" prop="vipPrice" >
-              <template slot-scope="scope">{{ scope.row.vipPrice /100 }}</template>
-            </el-table-column>
+<!--            <el-table-column align="center" label="现价" prop="price" >-->
+<!--              <template slot-scope="scope">{{ scope.row.price /100 }}</template>-->
+<!--            </el-table-column>-->
+<!--            <el-table-column align="center" label="VIP价格" prop="vipPrice" >-->
+<!--              <template slot-scope="scope">{{ scope.row.vipPrice /100 }}</template>-->
+<!--            </el-table-column>-->
           </el-table>
         </template>
       </el-table-column>
@@ -89,10 +89,6 @@
       </el-table-column>
 
       <el-table-column align="center" label="类目ID" prop="categoryId" />
-
-      <el-table-column align="center" label="邮费模板ID" prop="freightTemplateId" />
-
-      <el-table-column align="center" label="销量" prop="sales" />
 
       <el-table-column align="center" label="单位" prop="unit" />
 

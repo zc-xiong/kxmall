@@ -198,9 +198,9 @@ public class ApiController {
                             continue;
                         }
                     }
-//                    if (args[i] == null && methodParam.getAnnotation(NotNull.class) != null) {
-//                        throw new LauncherServiceException(LauncherExceptionDefinition.LAUNCHER_USER_NOT_LOGIN);
-//                    }
+                    if (args[i] == null && methodParam.getAnnotation(NotNull.class) != null) {
+                        throw new AdminServiceException(AdminExceptionDefinition.LAUNCHER_USER_NOT_LOGIN);
+                    }
                 } else if (httpParam.type() == HttpParamType.ADMIN_ID) {
                     String accessToken = request.getHeader(Const.ADMIN_ACCESS_TOKEN);
                     if (!StringUtils.isEmpty(accessToken)) {

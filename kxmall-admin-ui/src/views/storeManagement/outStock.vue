@@ -209,7 +209,7 @@
 </template>
 
 <script>
-import { outStockList, outStockStoragAllName, outStockCreate, outStockDeleteAll, outStockSelectById, outStockUpdate, outStockUpdateOutOfStock } from '@/api/out_stock'
+import { outStockList, outStockStoragAllName, outStockCreate, outStockDeleteAll, outStockSelectById, outStockUpdateOutOfStock } from '@/api/out_stock'
 import store from '@/store'
 import addGoods from './addGoods'
 export default {
@@ -362,15 +362,15 @@ export default {
         this.showEditStockDataLists.map(item => {
           delete item.id
         })
-        const config = {
-          id: this.showEditStockLists.data.data.id,
-          outStockNumbers: this.showEditStockLists.data.data.outStockNumbers,
-          storageId: this.showEditStockLists.data.data.storageId,
-          outgiongPerson: this.showEditStockLists.data.data.outgiongPerson,
-          remarks: this.showEditStockLists.data.data.remarks
-        }
-        const res = await outStockUpdate({ outStockSpuDOS: this.showEditStockDataLists, ...config })
-        console.log(res)
+        // const config = {
+        //   id: this.showEditStockLists.data.data.id,
+        //   outStockNumbers: this.showEditStockLists.data.data.outStockNumbers,
+        //   storageId: this.showEditStockLists.data.data.storageId,
+        //   outgiongPerson: this.showEditStockLists.data.data.outgiongPerson,
+        //   remarks: this.showEditStockLists.data.data.remarks
+        // }
+        // const res = await outStockUpdate({ outStockSpuDOS: this.showEditStockDataLists, ...config })
+        // console.log(res)
       }
       if (this.showEditState === 2) {
         const config = {
@@ -395,7 +395,6 @@ export default {
       /* 根据传进来的id 转为相应的名字 */
       let name = id
       this.entrepotOptions.map(item => {
-        console.log(item)
         if (item.value === id) {
           name = item.label
         }
@@ -451,7 +450,6 @@ export default {
     },
     batchAdd(data) {
       /* 批量添加 */
-      console.log(data)
       const washData = this.goodsWashData(data)
       this.showEditStockDataLists.push(...washData)
     },
@@ -513,7 +511,6 @@ export default {
         const token = store.getters.token
         const name = store.getters.roles[0]
         const res = await outStockUpdateOutOfStock({ outStockNumbers: data.outStockNumbers, storageId: data.storageId, outgoingPerson: name, adminId: token })
-        console.log(res)
         if (res.data.errno === 200) {
           this.$message({
             type: 'success',
@@ -540,7 +537,6 @@ export default {
       }).then(async() => {
         const token = store.getters.token
         const res = await outStockDeleteAll({ adminId: token, id: data.id, outStockNumbers: data.outStockNumbers })
-        console.log(res)
         if (res.data.errno === 200) {
           this.$message({
             type: 'success',

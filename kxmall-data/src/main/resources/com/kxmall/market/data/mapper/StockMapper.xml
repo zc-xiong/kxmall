@@ -6,17 +6,21 @@
         update kxmall_stock set stock = stock - #{outStockNum} where sku_id = #{skuId} and storage_id= #{storageId}
     </update>
 
+    <update id="updateSockForAdd">
+        update kxmall_stock set stock = stock + #{outStockNum} where sku_id = #{skuId} and storage_id= #{storageId}
+    </update>
+
     <select id="selectStockListByStorageAndCategoryCount" resultType="Integer">
         SELECT
         count(1)
         FROM `kxmall_stock` s
-        left join kxmall_sku sku
+        inner join kxmall_sku sku
         on s.sku_id = sku.id
-        left JOIN kxmall_spu spu
+        inner JOIN kxmall_spu spu
         on s.spu_id = spu.id
-        LEFT JOIN kxmall_category ca
+        inner JOIN kxmall_category ca
         on spu.category_id = ca.id
-        left join kxmall_storage sto
+        inner join kxmall_storage sto
         on sto.id = s.storage_id
         WHERE 1 = 1
         <if test="storageId != null">
@@ -85,15 +89,11 @@
         s.price as price,
         s.gmt_create as gmtCreate,
         s.gmt_update as gmtUpdate
-        FROM `kxmall_stock` s
-        left join kxmall_sku sku
-        on s.sku_id = sku.id
-        left JOIN kxmall_spu spu
-        on s.spu_id = spu.id
-        LEFT JOIN kxmall_category ca
-        on spu.category_id = ca.id
-        left join kxmall_storage sto
-        on sto.id = s.storage_id
+        FROM kxmall_stock s
+        inner join kxmall_sku sku on s.sku_id = sku.id
+        inner JOIN kxmall_spu spu on s.spu_id = spu.id
+        inner JOIN kxmall_category ca on spu.category_id = ca.id
+        inner join kxmall_storage sto on s.storage_id = sto.id
         WHERE 1 = 1
         <if test="storageId != null">
             and s.storage_id = #{storageId}

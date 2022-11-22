@@ -11,6 +11,7 @@ import com.kxmall.market.data.component.LockComponent;
 import com.kxmall.market.data.domain.CategoryDO;
 import com.kxmall.market.data.domain.SpuDO;
 import com.kxmall.market.data.domain.StockDO;
+import com.kxmall.market.data.domain.StorageDO;
 import com.kxmall.market.data.dto.StockDTO;
 import com.kxmall.market.data.dto.goods.SkuDTO;
 import com.kxmall.market.data.dto.goods.SpuDTO;
@@ -18,6 +19,7 @@ import com.kxmall.market.data.mapper.CategoryMapper;
 import com.kxmall.market.data.mapper.StockMapper;
 import com.kxmall.market.data.model.Page;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,14 +72,31 @@ public class StockServiceImpl implements StockService {
      * @date 2020/2/19
      */
     @Override
-    public Page<StockDTO> list(Long storageId, Long categoryId, String name, Integer status, Integer page, Integer limit,String idsNotInJson, Long adminId) throws ServiceException {
+    public Page<StockDTO> list(Long storageId, Long categoryId, String name, Integer status, Integer page, Integer limit, String idsNotInJson, Long adminId) throws ServiceException {
         Integer offset = (page - 1) * limit;
         Integer size = limit;
         List<String> idsNotIn = null;
         if (!StringUtils.isEmpty(idsNotInJson)) {
             idsNotIn = JSONObject.parseArray(idsNotInJson, String.class);
         }
-        List<StockDTO> stocks = stockMapper.selectStockListByStorageAndCategory(storageId, categoryId, name, status, offset, size,null,idsNotIn);
+        List<StockDTO> stocks = stockMapper.selectStockListByStorageAndCategory(storageId, categoryId, name, status, offset, size, null, idsNotIn);
+        for (StockDTO stock : stocks) {
+            StorageDO storageDO = new StorageDO();
+            BeanUtils.copyProperties(stock.getStorageDO(), storageDO);
+            stock.setStorageDO(storageDO);
+
+            CategoryDO categoryDO = new CategoryDO();
+            BeanUtils.copyProperties(stock.getCategoryDO(), categoryDO);
+            stock.setCategoryDO(categoryDO);
+
+            SkuDTO skuDTO = new SkuDTO();
+            BeanUtils.copyProperties(stock.getSkuDTO(), skuDTO);
+            stock.setSkuDTO(skuDTO);
+
+            SpuDO spuDO = new SpuDO();
+            BeanUtils.copyProperties(stock.getSpuDO(), spuDO);
+            stock.setSpuDO(spuDO);
+        }
         for (StockDTO stock : stocks) {
             CategoryDO category = stock.getCategoryDO();
             if (category != null) {
@@ -89,7 +108,7 @@ public class StockServiceImpl implements StockService {
             SkuDTO skuDTO = stock.getSkuDTO();
             if (skuDTO != null) {
                 SpuDO spuDO = stock.getSpuDO();
-                if(spuDO != null) {
+                if (spuDO != null) {
                     Integer originalPrice = spuDO.getOriginalPrice();
                     Integer price = stock.getPrice();
                     //计算折扣
@@ -103,7 +122,7 @@ public class StockServiceImpl implements StockService {
                 }
             }
         }
-        Integer count = stockMapper.selectStockListByStorageAndCategoryCount(storageId, categoryId, name, status,idsNotIn);
+        Integer count = stockMapper.selectStockListByStorageAndCategoryCount(storageId, categoryId, name, status, idsNotIn);
         return new Page<>(stocks, page, limit, count);
     }
 
@@ -129,8 +148,12 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    @Transactional
     public String delete(Long stockId, Long adminId) throws ServiceException {
-        return null;
+        if (stockMapper.deleteById(stockId) == 0) {
+            throw new AdminServiceException(ExceptionDefinition.NEW_TIMES_DELETE);
+        }
+        return "ok";
     }
 
     @Override
@@ -202,11 +225,10 @@ public class StockServiceImpl implements StockService {
     }
 
     /**
-     *
      * @param storageId 仓库id
-     * @param spuId 商品id
-     * @param num 更新数量
-     * @param adminId 管理员id
+     * @param spuId     商品id
+     * @param num       更新数量
+     * @param adminId   管理员id
      * @return
      * @throws ServiceException
      */
@@ -216,6 +238,6 @@ public class StockServiceImpl implements StockService {
         StockDO stockDO = new StockDO();
         stockDO.setGmtUpdate(new Date());
         stockDO.setWarningNum(num);
-        return stockMapper.update(stockDO, new EntityWrapper<StockDO>().eq("storage_id", storageId).eq("spu_id",spuId));
+        return stockMapper.update(stockDO, new EntityWrapper<StockDO>().eq("storage_id", storageId).eq("spu_id", spuId));
     }
 }

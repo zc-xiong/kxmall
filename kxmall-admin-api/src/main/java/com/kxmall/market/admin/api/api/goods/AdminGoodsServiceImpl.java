@@ -301,6 +301,7 @@ public class AdminGoodsServiceImpl implements AdminGoodsService {
             skuDO.setSpuId(spuDO.getId());
             skuDO.setGmtUpdate(now);
             //skuDO.setFreezeStock(0);
+            skuDO.setOriginalPrice(spuDTO.getOriginalPrice());
             if (skuMapper.update(skuDO,
                     new EntityWrapper<SkuDO>()
                             .eq("bar_code", skuDO.getBarCode())) <= 0) {

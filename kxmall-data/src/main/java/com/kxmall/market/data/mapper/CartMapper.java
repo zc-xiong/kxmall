@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface CartMapper extends BaseMapper<CartDO> {
 
-    public Integer countCart(Long userId);
+    public Integer countCart(@Param("userId") Long userId, @Param("storageId") Long storageId);
 
     /**
      * 获取购物车商品

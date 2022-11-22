@@ -411,7 +411,9 @@
 				})				
 			},
 			countTabNum(){
-				this.$api.request('cart','countCart').then(res=>{
+				this.$api.request('cart','countCart',{
+					storageId:this.$store.state.storageId
+				}).then(res=>{
 					if(res.data > 0){
 						uni.setTabBarBadge({
 							index:2,
@@ -443,13 +445,7 @@
 							uni.hideLoading()
 								this.logining = false
 								this.$api.msg(failres.errmsg)
-								this.$store.commit('setStorage',11)
-								this.loadData(11)
-								if(!11){
-									this.storage ? this.storage = false : this.storage = true
-								}else{
-									this.loadRecommand('refresh')
-								}
+								this.storage ? this.storage = false : this.storage = true
 						}).then(res=>{
 							uni.hideLoading()
 							console.log(res)

@@ -1,6 +1,6 @@
 module.exports = {
 	NODE_ENV: '"production"',
 	ENV_CONFIG: '"prod"',
-    HOST: '"http://localhost:8080"',
-  	BASE_API: '"http://localhost:8080/m.api"'
+    HOST: '"http://124.222.94.118:8080"',
+  	BASE_API: '"http://124.222.94.118:8080/m.api"'
 }

@@ -64,21 +64,6 @@
 					style="width: 32rpx;height: 36rpx;"></image>
 					<view class="padding-left-sm lem-text-black" style="font-size: 28rpx;">地址管理</view>
 				</view>
-				<!-- <view class="flex align-center padding">
-					<image src="../../static/user/notice@3x.png" mode="aspectFit"
-					style="width: 32rpx;height: 36rpx;"></image>
-					<view class="padding-left-sm lem-text-black" style="font-size: 28rpx;">我的消息</view>
-				</view> -->
-				<view @click="navTo('/pages/user/coupons')" class="flex align-center padding">
-					<image src="../../static/user/notice@3x.png" mode="aspectFit"
-					style="width: 32rpx;height: 36rpx;"></image>
-					<view class="padding-left-sm lem-text-black" style="font-size: 28rpx;">我的优惠券</view>
-				</view>
-				<view @click="navTo('/pages/PanicBuying/PanicBuying')" class="flex align-center padding">
-					<image src="../../static/user/notice@3x.png" mode="aspectFit"
-					style="width: 32rpx;height: 36rpx;"></image>
-					<view class="padding-left-sm lem-text-black" style="font-size: 28rpx;">我的抢购券</view>
-				</view>
 				<button open-type="contact" class="flex align-center padding contact-btn" >
 					<image src="../../static/user/secretary@3x.png" mode="aspectFit"
 					style="width: 32rpx;height: 36rpx;"></image>
@@ -228,7 +213,9 @@
 			this.$store.state.storageId ? this.storage = true : this.storage = false
 			//如果用户已登录，获取购物车数量
 			if(this.$store.state.userInfo.accessToken){
-				this.$api.request('cart','countCart').then(res=>{
+				this.$api.request('cart','countCart',{
+					storageId:this.$store.state.storageId
+				}).then(res=>{
 					if(res.data > 0){
 						uni.setTabBarBadge({
 							index:2,
@@ -394,17 +381,10 @@
 							uni.hideLoading()
 								this.logining = false
 								this.$api.msg(failres.errmsg)
-								this.$store.commit('setStorage',11)
-								this.loadData(11)
-								if(!11){
-									this.storage ? this.storage = false : this.storage = true
-								}else{
-									this.loadRecommand('refresh')
-								}
+								this.storage ? this.storage = false : this.storage = true
 						}).then(res=>{
 							uni.hideLoading()
 							console.log(res)
-							// res.data.id = 11
 							this.$store.commit('setStorage',res.data.id)
 							this.newTop = []
 							this.cheapRecommend = []

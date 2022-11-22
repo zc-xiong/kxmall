@@ -3,14 +3,14 @@
     <a
       v-show="false"
       ref="download"
-      href="http://114.67.94.213:8080/stock/export" />
+      href="" />
     <a
       v-show="false"
       ref="clear"
-      href="http://114.67.94.213:8080/stock/exportErrorData" />
+      href="" />
     <el-button
       type="primary"
-      @click="importExcel">excel模板导入</el-button>
+      @click="importExcel">excel模板导出</el-button>
     <el-button type="primary" @click="dialogVisible=true">excel导入</el-button>
     <el-button type="primary" @click="exportError">清空错误商品并导出</el-button>
     <el-table
@@ -149,11 +149,13 @@ export default {
   methods: {
     importExcel() {
       this.$message.success('已添加到下载任务')
+      this.$refs.download.href = process.env.HOST + `/stock/export`
       setTimeout(
         this.$refs.download.click(), 300
       )
     },
     exportError() {
+      this.$refs.clear.href = process.env.HOST + `/stock/exportErrorData`
       this.$refs.clear.click()
     },
 
@@ -180,7 +182,7 @@ export default {
       form.append('file', fileObj)
       console.log(JSON.stringify(form))
       console.log(form)
-      axios.post('http://114.67.94.213:8080/stock/insertBatch', form).then(res => {
+      axios.post(process.env.HOST + '/stock/insertBatch', form).then(res => {
         console.log(res)
         this.tableData = res.data.data
         this.$message.info('文件：' + fileObj.name + '上传成功')

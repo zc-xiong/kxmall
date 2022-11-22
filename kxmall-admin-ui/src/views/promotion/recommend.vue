@@ -51,12 +51,6 @@
 
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <!-- <el-button
-            v-permission="['admin:advertisement:update']"
-            type="primary"
-            size="mini"
-            @click="updateDialogBtn(scope.row)"
-          >编辑</el-button> -->
           <el-button
             v-permission="['admin:recommend:deleteRecommend']"
             type="danger"

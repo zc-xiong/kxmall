@@ -15,7 +15,6 @@ import com.kxmall.market.data.dto.order.OrderDTO;
 import com.kxmall.market.data.enums.OrderStatusType;
 import com.kxmall.market.plugin.core.inter.IPluginPaySuccess;
 import com.kxmall.market.plugin.core.manager.PluginsManager;
-import com.kxmall.market.data.mapper.GroupShopMapper;
 import com.kxmall.market.data.mapper.OrderMapper;
 import com.kxmall.market.data.mapper.OrderSkuMapper;
 import com.kxmall.market.data.mapper.SpuMapper;
@@ -54,9 +53,6 @@ public class CallbackController {
 
     @Autowired
     private OrderSkuMapper orderSkuMapper;
-
-    @Autowired
-    private GroupShopMapper groupShopMapper;
 
     @Autowired
     private WxPayService wxPayService;
@@ -129,10 +125,6 @@ public class CallbackController {
         orderSkuDOList.forEach(item -> {
             //增加销量
             spuMapper.incSales(item.getSpuId(), item.getNum());
-            if (order.getGroupShopId() != null) {
-                //增加团购人数, 若想算商品数这里就获取orderSku的数量，若想算人数，这里就写1
-                groupShopMapper.incCurrentNum(order.getGroupShopId(), item.getNum());
-            }
         });
 
         OrderDTO orderDTO = new OrderDTO();

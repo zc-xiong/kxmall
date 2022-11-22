@@ -13,10 +13,14 @@
 				// https://s1.ax1x.com/2020/04/07/G2urVA.png
 				// https://s1.ax1x.com/2020/04/07/G2uBbd.png
 				// https://s1.ax1x.com/2020/04/07/G2u0DH.png
-				var [err,res1] =  await uni.getLocation({
-				    type: 'wgs84'
-				})
-				if(res1.errMsg === 'getLocation:ok'){
+				// var [err,res1] =  await uni.getLocation({
+				//     type: 'wgs84'
+				// })
+				var res1={}
+				res1.errMsg ='getLocation:ok'
+				res1.longitude ='11.22'
+				res1.latitude ='11.22'
+				if(res1.errMsg  === 'getLocation:ok'){
 					uni.showLoading({
 						title:"加载中..."
 					})
@@ -25,19 +29,8 @@
 						lat:res1.latitude
 					},failres => {
 						uni.hideLoading()
-						res.data.id = 11
-						this.$store.commit('setStorage',res.data.id)
-						this.$store.commit('setStorageObj',{businessStartTime:"9:30",
-							businessState:false,
-							businessStopTime:"22:30",
-							deliveryStartTime:"9:30",
-							deliveryStopTime:"23:00",
-							haveStorage:true,
-							id:11}
-						)
 					}).then(res=>{
 						uni.hideLoading()
-						res.data.id = 11
 						this.$store.commit('setStorage',res.data.id)
 						this.$store.commit('setStorageObj',{businessStartTime:"9:30",
 							businessState:false,
@@ -45,12 +38,14 @@
 							deliveryStartTime:"9:30",
 							deliveryStopTime:"23:00",
 							haveStorage:true,
-							id:11}
+							id:res.data.id}
 						)
 					})
 				}
-				if(this.$store.state.userInfo.accessToken){
-					this.$api.request('cart','countCart').then(res=>{
+				if(this.$store.state.userInfo.accessToken && this.$store.state.storageId != 0){
+					this.$api.request('cart','countCart',{
+					storageId:this.$store.state.storageId
+				}).then(res=>{
 						if(res.data > 0){
 							uni.setTabBarBadge({
 								index:2,
@@ -59,7 +54,7 @@
 						}
 						this.$store.commit('addCart',res.data)
 					}).catch(err=>{
-						// this.$api.msg('请求失败，请稍后再试')
+						this.$api.msg('请求失败，请稍后再试')
 					})
 				}
 			},

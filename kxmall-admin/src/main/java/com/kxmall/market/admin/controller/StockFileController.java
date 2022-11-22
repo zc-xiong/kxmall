@@ -139,6 +139,6 @@ public class StockFileController {
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("库存模板", "库存模板", ExcelType.HSSF),StockExcelDTO.class,stockExcelDTOS);
         ExcelUtils.selectList(workbook, 0, 0, ids);
         ExcelUtils.selectList(workbook, 1, 1, codes);
-        ExcelUtils.downLoadExcel("库存模板",workbook, request, response);
+        ExcelUtils.downLoadExcel("商品导入模板",workbook, request, response);
     }
 }

@@ -48,7 +48,7 @@
 			<view class="distribution-list distribution-list-bottom">
 				<view class="distribution-text">配送费</view>
 				<view class="distribution-price">0元</view>
-			</view>
+			</view>	
 			<view class="distribution-list">
 				<view class="distribution-text">备注</view>
 				<view class="distribution-price"><input type="text" v-model="orderReqeust.mono" placeholder="请输入备注信息"></view>
@@ -81,6 +81,7 @@
 				去付款
 			</view>
 		</view>
+		
 		<uni-popup ref="popup" type="bottom" :animation="true" style="z-index: 9999;">
 			<view class="flex align-center justify-between" style="padding: 34rpx 30rpx;background-color: #F2F2F2;">
 				<view style="font-size: 32rpx;line-height: 38rpx;color: #1B1C33;">选择送达时间</view>
@@ -122,6 +123,7 @@
 					totalPrice: 0, //商品折扣（仅算VIP和限时打折）后总价
 					totalNumber:0,//商品件数
 					coupon: undefined,
+					couponId: 0,
 					mono: '',
 					takeWay: '',
 					freightPrice: 0,
@@ -188,10 +190,6 @@
 			that.orderReqeust.totalOriginalPrice = totalOriginalPrice
 			that.orderReqeust.totalNumber = totalNumber
 			that.orderReqeust.totalPrice = totalPrice
-			// that.$api.request('coupon', 'getUserCoupons').then(res => {
-			// 	that.couponList = res.data
-			// })
-
 			that.$api.request('address', 'getDefAddress').then(res => {
 				if(res.data){
 					that.addressData = res.data
@@ -206,25 +204,12 @@
 			this.calcTime()
 		},
 		methods: {
-			//显示优惠券面板
-			toggleMask(type) {
-				let timer = type === 'show' ? 10 : 300;
-				let state = type === 'show' ? 1 : 0;
-				this.maskState = 2;
-				setTimeout(() => {
-					this.maskState = state;
-				}, timer)
-			},
 			calcFreightPrice() {
 				const that = this
 				if (that.addressData) {
 					that.orderReqeust.addressId = that.addressData.id
 				}
-				that.$api.request('freight', 'getFreightMoney', {
-					orderRequestDTO: JSON.stringify(that.orderReqeust)
-				}).then(res => {
-					that.orderReqeust.freightPrice = res.data
-				})
+				that.orderReqeust.freightPrice = 0
 			},
 			numberChange(data) {
 				this.number = data.number;
@@ -261,6 +246,7 @@
 
 			},
 			selectCoupon(couponItem) {
+				this.orderReqeust.couponId = couponItem.id
 				this.orderReqeust.coupon = couponItem
 				this.maskState = 0
 				this.calcFreightPrice()
@@ -458,26 +444,29 @@
 					});
 					//#endif
 					//#ifdef H5
-					that.$jweixin.chooseWXPay({
-						nonceStr: prepayRes.data.nonceStr,
-						timestamp: prepayRes.data.timeStamp,
-						package: prepayRes.data.packageValue,
-						signType: prepayRes.data.signType,
-						paySign: prepayRes.data.paySign,
-						success: (e) => {
-							//支付成功
-							uni.redirectTo({
-								url: '/pages/pay/success'
-							})
-						},
-						fail: function(res) {
-							console.log("支付过程失败");
-							that.$api.msg(JSON.stringify(res))
-						},
-						complete: function(res) {
-							console.log("支付过程结束")
-						}
+					uni.redirectTo({
+						url: '/pages/pay/success'
 					})
+					// that.$jweixin.chooseWXPay({
+					// 	nonceStr: prepayRes.data.nonceStr,
+					// 	timestamp: prepayRes.data.timeStamp,
+					// 	package: prepayRes.data.packageValue,
+					// 	signType: prepayRes.data.signType,
+					// 	paySign: prepayRes.data.paySign,
+					// 	success: (e) => {
+					// 		//支付成功
+					// 		uni.redirectTo({
+					// 			url: '/pages/pay/success'
+					// 		})
+					// 	},
+					// 	fail: function(res) {
+					// 		console.log("支付过程失败");
+					// 		that.$api.msg(JSON.stringify(res))
+					// 	},
+					// 	complete: function(res) {
+					// 		console.log("支付过程结束")
+					// 	}
+					// })
 					//#endif
 				})
 			}
@@ -485,12 +474,44 @@
 	}
 </script>
 
-<style>
+<style  lang="scss">
 	page {
 		background: #F4F4F4;
 		padding-bottom: 100upx;
 	}
+	.mask {
+		display: flex;
+		align-items: flex-end;
+		position: fixed;
+		left: 0;
+		top: var(--window-top);
+		bottom: 0;
+		width: 100%;
+		background: rgba(0, 0, 0, 0);
+		z-index: 9995;
+		transition: .3s;
+		
+		.mask-content {
+			width: 100%;
+			min-height: 30vh;
+			max-height: 70vh;
+			background: #f3f3f3;
+			transform: translateY(100%);
+			transition: .3s;
+			overflow-y: scroll;
+		}
 
+		&.none {
+			display: none;
+		}
+
+		&.show {
+			background: rgba(0, 0, 0, .4);
+			.mask-content {
+				transform: translateY(0);
+			}
+		}
+	}
 	.address {
 		padding: 36upx 30upx;
 		background-color: #FFFFFF;

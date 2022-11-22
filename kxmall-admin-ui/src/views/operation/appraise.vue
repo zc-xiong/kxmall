@@ -170,7 +170,7 @@ export default {
     },
     changeState(val) {
       changeState({
-        AppraiseId: val
+        appraiseId: val
       }).then(res => {
         this.getList()
       })

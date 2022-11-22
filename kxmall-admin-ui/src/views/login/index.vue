@@ -86,7 +86,7 @@
 
           <div class="login-menu">
             <a
-              href="#"
+              href="https://gitee.com/zhengkaixing/kxmall"
               @click.stop="activeName='user'">kxmall官网</a>
             <a
               href="#"

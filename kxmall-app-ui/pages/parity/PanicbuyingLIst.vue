@@ -283,7 +283,9 @@
 			},
 			//统计购物车数量
 			countCart(){
-				this.$api.request('cart','countCart').then(res=>{
+				this.$api.request('cart','countCart',{
+					storageId:this.$store.state.storageId
+				}).then(res=>{
 					this.cartNum = res.data
 				}).catch(err=>{
 					this.$api.msg('请求失败，请稍后再试')

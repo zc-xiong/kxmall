@@ -10,7 +10,6 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.kxmall.market.app.api.api.order.builder.OrderBuilder;
 import com.kxmall.market.app.api.api.order.builder.OrderDirector;
-import com.kxmall.market.biz.service.freight.FreightBizService;
 import com.kxmall.market.biz.service.order.OrderBizService;
 import com.kxmall.market.biz.service.user.UserBizService;
 import com.kxmall.market.core.exception.AdminServiceException;
@@ -24,7 +23,6 @@ import com.kxmall.market.data.domain.OrderDO;
 import com.kxmall.market.data.domain.OrderSkuDO;
 import com.kxmall.market.data.domain.UserFormIdDO;
 import com.kxmall.market.data.dto.UserDTO;
-import com.kxmall.market.data.dto.freight.ShipTraceDTO;
 import com.kxmall.market.data.dto.order.OrderDTO;
 import com.kxmall.market.data.dto.order.OrderRequestDTO;
 import com.kxmall.market.data.enums.OrderStatusType;
@@ -73,9 +71,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderBizService orderBizService;
-
-    @Autowired
-    private FreightBizService freightBizService;
 
     @Autowired
     private UserBizService userBizService;
@@ -316,22 +311,6 @@ public class OrderServiceImpl implements OrderService {
         updateOrderDO.setGmtUpdate(new Date());
         orderBizService.changeOrderStatus(orderNo, OrderStatusType.WAIT_CONFIRM.getCode(), updateOrderDO);
         return "ok";
-    }
-
-    @Override
-    public ShipTraceDTO queryShip(String orderNo, Long userId) throws ServiceException {
-        OrderDO orderDO = orderBizService.checkOrderExist(orderNo, userId);
-        if (orderDO.getStatus() < OrderStatusType.WAIT_CONFIRM.getCode()) {
-            throw new AppServiceException(ExceptionDefinition.ORDER_HAS_NOT_SHIP);
-        }
-        if (StringUtils.isEmpty(orderDO.getShipCode()) || StringUtils.isEmpty(orderDO.getShipNo())) {
-            throw new AppServiceException(ExceptionDefinition.ORDER_DID_NOT_SET_SHIP);
-        }
-        ShipTraceDTO shipTraceList = freightBizService.getShipTraceList(orderDO.getShipNo(), orderDO.getShipCode());
-        if (CollectionUtils.isEmpty(shipTraceList.getTraces())) {
-            throw new AppServiceException(ExceptionDefinition.ORDER_DO_NOT_EXIST_SHIP_TRACE);
-        }
-        return shipTraceList;
     }
 
 }

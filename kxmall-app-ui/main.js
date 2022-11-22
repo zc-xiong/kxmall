@@ -237,12 +237,13 @@ Vue.prototype.$getLocation = async (isChoose=false,latitude='',longitude='')=>{
 		ret.longitude = res.longitude
 	}else{
 		var [err,res] =  await uni.getLocation({
-		    type: 'wgs84'
+			type: 'wgs84'
 		})
-		if(res.errMsg === 'getLocation:ok'){
+		if(res && res.errMsg === 'getLocation:ok'){
 			ret.latitude = res.latitude
 			ret.longitude = res.longitude
 		}else{
+			console.log(err.errMsg)
 			return false
 		}
 	}
@@ -250,7 +251,7 @@ Vue.prototype.$getLocation = async (isChoose=false,latitude='',longitude='')=>{
 		url:"https://restapi.amap.com/v3/geocode/regeo",
 		method:"GET",
 		data:{
-			key:'49ddbf4ad01c98ad1d5a63a23ddd4959',
+			key:'a0096c306be491b44b6ffc21c3af9dd4',
 			location:ret.longitude+','+ret.latitude,
 			extensions:'all',
 			// poitype:'120000|060000'返回poi限定范围

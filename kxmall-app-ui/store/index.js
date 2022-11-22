@@ -12,7 +12,8 @@ const store = new Vuex.Store({
 		storageId:0,
 		cartNum:0,
 		storageObj:{},
-		InvitationCode:''
+		InvitationCode:'',
+		headerTop:''
 	},
 	mutations: {
 		login(state, provider) {
@@ -39,7 +40,7 @@ const store = new Vuex.Store({
 		}
 	},
 	actions: {
-	
+
 	},
 	getters: {
 		getUserInfo(state) {

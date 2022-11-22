@@ -27,7 +27,7 @@ public interface CartService {
             @NotNull @HttpParam(name = "userId", type = HttpParamType.USER_ID, description = "用户Id") Long userId,
             @HttpParam(name = "activityId", type = HttpParamType.COMMON, description = "活动id",valueDef = "0") Long activityId,
             @HttpParam(name = "couponId", type = HttpParamType.COMMON, description = "优惠券id",valueDef = "0") Long couponId
-            ) throws ServiceException;
+    ) throws ServiceException;
 
     @HttpMethod(description = "减少购物车")
     public Boolean subCartItem(
@@ -36,7 +36,7 @@ public interface CartService {
             @NotNull @HttpParam(name = "userId", type = HttpParamType.USER_ID, description = "用户Id") Long userId,
             @HttpParam(name = "activityId", type = HttpParamType.COMMON, description = "活动id",valueDef = "0") Long activityId,
             @HttpParam(name = "couponId", type = HttpParamType.COMMON, description = "优惠券id",valueDef = "0") Long couponId
-           ) throws ServiceException;
+    ) throws ServiceException;
 
     @HttpMethod(description = "将购物车商品删除")
     public Boolean removeCartItem(
@@ -60,7 +60,9 @@ public interface CartService {
 
     @HttpMethod(description = "购物车商品数量")
     public Integer countCart(
-            @NotNull @HttpParam(name = "userId", type = HttpParamType.USER_ID, description = "用户ID") Long userId);
+            @NotNull @HttpParam(name = "userId", type = HttpParamType.USER_ID, description = "用户ID") Long userId,
+            @NotNull @HttpParam(name = "storageId", type = HttpParamType.COMMON, description = "仓库id") Long storageId
+    );
 
     @HttpMethod(description = "获取用户购物车列表")
     public List<CartDTO> getCartList(

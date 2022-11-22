@@ -1,8 +1,6 @@
 <template>
   <div class="main">
-    <el-input v-model="name" placeholder="请输入仓库名称或id" style="width:300px" clearable>
-      <el-button slot="append" icon="el-icon-search"/>
-    </el-input>
+    <el-input v-model="name" placeholder="请输入仓库名称或id" style="width:200px" clearable/>
     <el-select v-model="status" placeholder="仓库状态" clearable filterable>
       <el-option :value="0" label="禁用"/>
       <el-option :value="1" label="正常"/>
@@ -11,14 +9,14 @@
       <el-option :value="0" label="休息中"/>
       <el-option :value="1" label="营业中"/>
     </el-select>
-    <el-select v-model="province" placeholder="请选择省" clearable filterable @change="getCity">
+    <el-select v-model="province" placeholder="请选择省" clearable filterable @change="getCityMethod">
       <el-option
         v-for="item in provinceList"
         :key="item.value"
         :label="item.label"
         :value="item.value"/>
     </el-select>
-    <el-select v-model="city" placeholder="请选择市" clearable filterable @change="getCounty">
+    <el-select v-model="city" placeholder="请选择市" clearable filterable @change="getCountyMethod">
       <el-option
         v-for="item in cityList"
         :key="item.value"
@@ -31,15 +29,15 @@
         :key="item.value"
         :label="item.label"
         :value="item.value"/>
-    </el-select> -->
-    <el-cascader
+    </el-select>
+    <!--<el-cascader
       :props="propsList"
       v-model="addressList"
       placeholder="请选择省市区"
       clearable
-    ></el-cascader>
-    <el-button v-permission="['admin:user:update']" type="primary" icon="el-icon-search" @click="doSearch">查找</el-button>
-    <el-button type="primary" @click="toAdd">新增</el-button>
+    ></el-cascader>-->
+    <el-button v-permission="['admin:storage:list']" type="primary" @click="doSearch">查找</el-button>
+    <el-button v-permission="['admin:storage:create']" type="primary" @click="toAdd">新增</el-button>
     <el-table
       :data="tableData"
       border
@@ -54,6 +52,7 @@
         label="仓库id"/>
       <el-table-column
         align="center"
+        show-overflow-tooltip
         prop="name"
         label="仓库名称"/>
       <el-table-column
@@ -81,6 +80,7 @@
       <el-table-column
         align="center"
         width="150"
+        show-overflow-tooltip
         label="地址">
         <template slot-scope="scope">
           <span>{{ scope.row.province | formatProvince }}{{ scope.row.city | formatCity }}{{ scope.row.county | formatCounty }}{{ scope.row.address }}</span>
@@ -241,27 +241,27 @@ export default {
   data() {
     return {
       addressList: [],
-      propsList: {
-        lazy: true,
-        lazyLoad(node, resolve) {
-          console.log(node)
-          setTimeout(async() => {
-            if (node.level === 0) {
-              const nodes = (await getProvinceAll()).data.data
-              resolve(nodes)
-            } else if (node.level === 1) {
-              const nodes = (await getCity(node.value)).data.data
-              resolve(nodes)
-            } else {
-              const nodes = (await getCounty(node.value)).data.data
-              nodes.forEach(val => {
-                val.leaf = true
-              })
-              resolve(nodes)
-            }
-          }, 300)
-        }
-      },
+      // propsList: {
+      //   lazy: true,
+      //   lazyLoad(node, resolve) {
+      //     console.log(node)
+      //     setTimeout(async() => {
+      //       if (node.level === 0) {
+      //         const nodes = (await getProvinceAll()).data.data
+      //         resolve(nodes)
+      //       } else if (node.level === 1) {
+      //         const nodes = (await getCity(node.value)).data.data
+      //         resolve(nodes)
+      //       } else {
+      //         const nodes = (await getCounty(node.value)).data.data
+      //         nodes.forEach(val => {
+      //           val.leaf = true
+      //         })
+      //         resolve(nodes)
+      //       }
+      //     }, 300)
+      //   }
+      // },
       detailData: {},
       detailBar: false,
       currentPage: 1,
@@ -272,8 +272,8 @@ export default {
       status: '',
       tableData: [],
       provinceList: [],
-      // cityList: [],
-      // countyList: [],
+      cityList: [],
+      countyList: [],
       province: '',
       city: '',
       county: '',
@@ -379,23 +379,30 @@ export default {
         this.changePage({ limit: this.pageSize, page: this.currentPage })
       })
     },
-    // async getCity(val) {
-    //   this.city = ''
-    //   this.county = ''
-    //   this.cityList = (await getCity(val)).data.data
-    // },
-    // async getCounty(val) {
-    //   this.county = ''
-    //   this.countyList = (await getCounty(val)).data.data
-    // },
+    async getCityMethod(val) {
+      this.city = ''
+      this.county = ''
+      this.cityList = []
+      this.countyList = []
+      if (val) {
+        this.cityList = (await getCity(val)).data.data
+      }
+    },
+    async getCountyMethod(val) {
+      this.county = ''
+      this.countyList = []
+      if (val) {
+        this.countyList = (await getCounty(val)).data.data
+      }
+    },
     doSearch() {
       this.changePage({
         state: this.status,
         operatingState: this.openStatus,
         name: this.name,
-        province: this.addressList[0],
-        city: this.city[1],
-        county: this.county[2],
+        province: this.province,
+        city: this.city,
+        county: this.county,
         limit: this.pageSize,
         page: this.currentPage
       })

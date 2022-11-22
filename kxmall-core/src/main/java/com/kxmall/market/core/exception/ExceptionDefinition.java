@@ -482,6 +482,15 @@ public class ExceptionDefinition {
     public static final ServiceExceptionDefinition GOODS_STORAGE_NAME =
             new ServiceExceptionDefinition(60010, "获取仓库名时出错");
 
+    public static final ServiceExceptionDefinition GOODS_IN_INSERT =
+            new ServiceExceptionDefinition(60011, "入库商品添加失败");
+
+    public static final ServiceExceptionDefinition GOODS_IN_Delete =
+            new ServiceExceptionDefinition(60012, "入库商品更新失败");
+
+    public static final ServiceExceptionDefinition GOODS_IN_SPU_DELETE =
+            new ServiceExceptionDefinition(60013, "入库商品删除失败");
+
     public static final ServiceExceptionDefinition ACTIVITY_COUPON_LIST_EMPTY =
             new ServiceExceptionDefinition(70001, "活动购物券列表不能为空");
 
@@ -505,6 +514,9 @@ public class ExceptionDefinition {
 
     public static final ServiceExceptionDefinition NEW_TIMES_INSERT =
             new ServiceExceptionDefinition(80002, "添加时出错");
+
+    public static final ServiceExceptionDefinition NEW_TIMES_DELETE =
+            new ServiceExceptionDefinition(80003, "删除时出错");
 
     public static ServiceExceptionDefinition buildVariableException(ServiceExceptionDefinition definition, String... args) {
         String msg = definition.getMsg();

@@ -5,12 +5,14 @@ import com.kxmall.market.biz.service.category.CategoryBizService;
 import com.kxmall.market.core.exception.AppServiceException;
 import com.kxmall.market.core.exception.ExceptionDefinition;
 import com.kxmall.market.core.exception.ServiceException;
+import com.kxmall.market.core.exception.ServiceExceptionDefinition;
 import com.kxmall.market.data.domain.CartDO;
 import com.kxmall.market.data.dto.CartDTO;
 import com.kxmall.market.data.mapper.CartMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -34,6 +36,9 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public CartDO addCartItem(Long skuId, Integer num, Long userId, Long activityId, Long couponId) throws ServiceException {
+        if (ObjectUtils.isEmpty(userId)) {
+            throw new AppServiceException(new ServiceExceptionDefinition(12033, "请先登录！"));
+        }
         List<CartDO> cartDos = cartMapper.selectList(
                 new EntityWrapper<CartDO>()
                         .eq("activity_id", activityId)
@@ -142,8 +147,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Integer countCart(Long userId) {
-        Integer userCountCart = cartMapper.countCart(userId);
+    public Integer countCart(Long userId, Long storageId) {
+        Integer userCountCart = cartMapper.countCart(userId,storageId);
         return (userCountCart == null) ? 0 : userCountCart;
     }
 

@@ -7,7 +7,6 @@ import com.kxmall.market.biz.service.appriaise.AppraiseBizService;
 import com.kxmall.market.biz.service.category.CategoryBizService;
 import com.kxmall.market.biz.service.collect.CollectBizService;
 import com.kxmall.market.biz.service.footpring.FootprintBizService;
-import com.kxmall.market.biz.service.freight.FreightBizService;
 import com.kxmall.market.core.Const;
 import com.kxmall.market.core.exception.AppServiceException;
 import com.kxmall.market.core.exception.ExceptionDefinition;
@@ -21,7 +20,6 @@ import com.kxmall.market.data.domain.SpuDO;
 import com.kxmall.market.data.domain.StockDO;
 import com.kxmall.market.data.dto.StockDTO;
 import com.kxmall.market.data.dto.appraise.AppraiseResponseDTO;
-import com.kxmall.market.data.dto.freight.FreightTemplateDTO;
 import com.kxmall.market.data.dto.goods.SkuDTO;
 import com.kxmall.market.data.dto.goods.SpuDTO;
 import com.kxmall.market.data.enums.BizType;
@@ -92,9 +90,6 @@ public class GoodsBizService {
 
     @Autowired
     private CategoryBizService categoryBizService;
-
-    @Autowired
-    private FreightBizService freightBizService;
 
     @Autowired
     private CacheComponent cacheComponent;
@@ -251,9 +246,6 @@ public class GoodsBizService {
         //获取商品属性
         List<SpuAttributeDO> spuAttributeList = spuAttributeMapper.selectList(new EntityWrapper<SpuAttributeDO>().eq("spu_id", spuId));
         spuDTO.setAttributeList(spuAttributeList);
-        //获取运费模板
-        FreightTemplateDTO templateDTO = freightBizService.getTemplateById(spuDO.getFreightTemplateId());
-        spuDTO.setFreightTemplate(templateDTO);
         //放入缓存
         cacheComponent.putObj(CA_SPU_PREFIX + spuId, spuDTO, Const.CACHE_ONE_DAY);
         packSpuCollectInfo(spuDTO, userId);
@@ -386,9 +378,6 @@ public class GoodsBizService {
         //获取商品属性
         List<SpuAttributeDO> spuAttributeList = spuAttributeMapper.selectList(new EntityWrapper<SpuAttributeDO>().eq("spu_id", spuId));
         spuDTO.setAttributeList(spuAttributeList);
-        //获取运费模板
-        FreightTemplateDTO templateDTO = freightBizService.getTemplateById(spuDO.getFreightTemplateId());
-        spuDTO.setFreightTemplate(templateDTO);
         //放入缓存
         cacheComponent.putObj(CA_SPU_PREFIX + storageId + "_" + spuId, spuDTO, Const.CACHE_ONE_DAY);
         packSpuCollectInfo(spuDTO, userId);

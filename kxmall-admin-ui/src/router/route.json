@@ -29,20 +29,6 @@
 				},
 				"name":"appraise",
 				"page":"/operation/appraise"
-			},
-			{
-				"path":"freight",
-				"meta":{
-					"noCache":true,
-					"perms":[
-						"operation:freight:query",
-						"operation:freight:update",
-						"operation:freight:create"
-					],
-					"title":"运费模板管理"
-				},
-				"name":"freight",
-				"page":"/operation/freight"
 			}
 		],
 		"meta":{
@@ -106,24 +92,22 @@
 				"page": "/storeManagement/stock"
       },
 			{
-				"path":"putIn",
+				"path":"inStock",
 				"meta":{
 					"noCache":true,
 					"perms":[
-						"admin:enterStock:update",
-						"admin:enterStock:delete",
-						"admin:enterStock:list",
-						"admin:enterStock:create",
-						"admin:enterStock:update",
-						"admin:enterStock:selectById",
-						"admin:enterStock:UpdateEnterStockStatus",
-						"admin:enterStock:deleteBatch",
-						"admin:enterStock:getGoodsDetail"
+            "admin:goodsInStock:update",
+            "admin:goodsInStock:delete",
+            "admin:goodsInStock:list",
+            "admin:goodsInStock:create",
+            "admin:goodsInStock:selectById",
+            "admin:goodsInStock:updateInOfStock",
+            "admin:goodsInStock:storagAllName"
 					],
 					"title":"商品入库"
 				},
-				"name": "putIn",
-				"page": "/storeManagement/putIn"
+				"name": "inStock",
+				"page": "/storeManagement/inStock"
       },
       {
         "path":"outStock",
@@ -149,8 +133,7 @@
 				"meta":{
 					"noCache":true,
 					"perms":[
-						"operation:data:addWare",
-						"operation:data:edit"
+            "admin:storage:create"
 					],
 					"title":"新增仓库"
 				},
@@ -163,8 +146,7 @@
 				"meta":{
 					"noCache":true,
 					"perms":[
-						"operation:data:addWare",
-						"operation:data:edit"
+            "admin:storage:update"
 					],
 					"title":"编辑仓库"
 				},
@@ -208,230 +190,15 @@
             "admin:advertisement:queryAllAdvertisement",
             "admin:advertisement:queryAdvertisement"
           ],
-					"title": "首页轮播"
+					"title": "轮播管理"
 				},
 				"name": "merchantad_1",
 				"page": "/promotion/merchantad"
-			},
-			{
-				"path": "merchantad_2",
-				"meta": {
-					"noCache": true,
-					"perms": [
-						"admin:advertisement:addAdvertisement",
-						"admin:advertisement:deleteAdvertisement",
-						"admin:advertisement:updateAdvertisement",
-						"admin:advertisement:queryAllAdvertisement",
-						"admin:advertisement:queryAdvertisement"
-					],
-					"title": "分类精选"
-				},
-				"name": "merchantad_2",
-				"page": "/promotion/merchantad"
-			},
-			{
-				"path": "merchantad_3",
-				"meta": {
-					"noCache": true,
-          "perms": [
-            "admin:advertisement:addAdvertisement",
-            "admin:advertisement:deleteAdvertisement",
-            "admin:advertisement:updateAdvertisement",
-            "admin:advertisement:queryAllAdvertisement",
-            "admin:advertisement:queryAdvertisement"
-          ],
-					"title": "广告横幅"
-				},
-				"name": "merchantad_3",
-				"page": "/promotion/merchantad"
-			},
-			{
-				"path": "merchantad_4",
-				"meta": {
-					"noCache": true,
-          "perms": [
-            "admin:advertisement:addAdvertisement",
-            "admin:advertisement:deleteAdvertisement",
-            "admin:advertisement:updateAdvertisement",
-            "admin:advertisement:queryAllAdvertisement",
-            "admin:advertisement:queryAdvertisement"
-          ],
-					"title": "精品类目"
-				},
-				"name": "merchantad_4",
-				"page": "/promotion/merchantad"
-			},
-      {
-        "path": "merchantad_5",
-        "meta": {
-          "noCache": true,
-          "perms": [
-            "admin:advertisement:addAdvertisement",
-            "admin:advertisement:deleteAdvertisement",
-            "admin:advertisement:updateAdvertisement",
-            "admin:advertisement:queryAllAdvertisement",
-            "admin:advertisement:queryAdvertisement"
-          ],
-          "title": "活动弹窗"
-        },
-        "name": "merchantad_5",
-        "page": "/promotion/merchantad"
-      },
-      {
-        "path": "merchantad_6",
-        "meta": {
-          "noCache": true,
-          "perms": [
-            "admin:advertisement:addAdvertisement",
-            "admin:advertisement:deleteAdvertisement",
-            "admin:advertisement:updateAdvertisement",
-            "admin:advertisement:queryAllAdvertisement",
-            "admin:advertisement:queryAdvertisement"
-          ],
-          "title": "首页图片"
-        },
-        "name": "merchantad_6",
-        "page": "/promotion/merchantad"
-      },
-      {
-        "path": "merchantad_7",
-        "meta": {
-          "noCache": true,
-          "perms": [
-            "admin:advertisement:addAdvertisement",
-            "admin:advertisement:deleteAdvertisement",
-            "admin:advertisement:updateAdvertisement",
-            "admin:advertisement:queryAllAdvertisement",
-            "admin:advertisement:queryAdvertisement"
-          ],
-          "title": "分类图片"
-        },
-        "name": "merchantad_7",
-        "page": "/promotion/merchantad"
-      },
-      {
-        "path": "merchantad_8",
-        "meta": {
-          "noCache": true,
-          "perms": [
-            "admin:advertisement:addAdvertisement",
-            "admin:advertisement:deleteAdvertisement",
-            "admin:advertisement:updateAdvertisement",
-            "admin:advertisement:queryAllAdvertisement",
-            "admin:advertisement:queryAdvertisement"
-          ],
-          "title": "个人中心"
-        },
-        "name": "merchantad_8",
-        "page": "/promotion/merchantad"
-      },
-      {
-        "path": "merchantad_10",
-        "meta": {
-          "noCache": true,
-          "perms": [
-            "admin:advertisement:addAdvertisement",
-            "admin:advertisement:deleteAdvertisement",
-            "admin:advertisement:updateAdvertisement",
-            "admin:advertisement:queryAllAdvertisement",
-            "admin:advertisement:queryAdvertisement"
-          ],
-          "title": "特价列表"
-        },
-        "name": "merchantad_10",
-        "page": "/promotion/merchantad"
-      }
-		],
-		"meta":{
-			"icon":"chart",
-			"title":"轮播管理"
-		},
-		"name":"mallManage",
-		"alwaysShow":true
-	},
-	{
-		"redirect":"noredirect",
-    "path":"/activity",
-    "children":[
-			{
-				"path":"activityList",
-				"meta":{
-					"noCache":true,
-					"perms":[
-						"admin:activity:create",
-						"admin:activity:edit",
-						"admin:activity:updateStatus",
-						"admin:activity:list",
-						"admin:activity:query"
-					],
-					"title":"活动管理"
-				},
-				"name":"activityList",
-				"page":"/activityCenter/activityList"
-			},
-			{
-				"path":"couponManage",
-				"meta":{
-					"noCache":true,
-					"perms":[
-						"admin:coupon:addCoupon",
-						"admin:coupon:deleteCoupon",
-						"admin:coupon:queryCouponById",
-						"admin:coupon:queryCouponByIds",
-						"admin:coupon:updateCoupon",
-						"admin:coupon:queryCouponByTitle",
-						"admin:coupon:queryUserCouponByList",
-						"admin:coupon:updateCouponStatus"
-					],
-					"title":"优惠券管理"
-				},
-				"name":"couponManage",
-				"page":"/activityCenter/couponManage"
-			},
-			{
-				"path":"createActivity",
-				"hidden":true,
-				"meta":{
-					"noCache":true,
-					"perms":[
-            "admin:coupon:addCoupon",
-            "admin:coupon:deleteCoupon",
-            "admin:coupon:queryCouponById",
-            "admin:coupon:queryCouponByIds",
-            "admin:coupon:updateCoupon",
-            "admin:coupon:queryCouponByTitle",
-            "admin:coupon:queryUserCouponByList",
-            "admin:coupon:updateCouponStatus"
-					],
-					"title":"新建活动"
-				},
-				"name": "createActivity",
-				"page":"/activityCenter/editActivity"
-			},
-			{
-				"path": "editActivity",
-				"hidden":true,
-				"meta":{
-					"noCache":true,
-					"perms":[
-            "admin:coupon:addCoupon",
-            "admin:coupon:deleteCoupon",
-            "admin:coupon:queryCouponById",
-            "admin:coupon:queryCouponByIds",
-            "admin:coupon:updateCoupon",
-            "admin:coupon:queryCouponByTitle",
-            "admin:coupon:queryUserCouponByList",
-            "admin:coupon:updateCouponStatus"
-					],
-					"title":"编辑活动"
-				},
-				"name": "editActivity",
-				"page": "/activityCenter/editActivity"
 			}
 		],
 		"meta":{
 			"icon":"chart",
-			"title":"活动中心"
+			"title":"轮播管理"
 		},
 		"name":"mallManage",
 		"alwaysShow":true
@@ -486,23 +253,8 @@
 				},
 				"name":"goodsUpsert",
 				"page":"/goods/upsert"
-			},
-      {
-        "path": "groupshop",
-        "meta": {
-          "noCache": true,
-          "perms": [
-            "operation:groupShop:editGroupShopSpu",
-            "operation:groupShop:queryGroupShop",
-            "operation:groupShop:addGroupShopSpu",
-            "operation:groupShop:deleteGroupShopSpu"
-          ],
-          "title": "团购商品"
-        },
-        "name": "groupShop",
-        "page": "/goods/groupshop"
-      }
-		],
+			}
+    ],
 		"meta":{
 			"icon":"shopping",
 			"title":"商品管理"

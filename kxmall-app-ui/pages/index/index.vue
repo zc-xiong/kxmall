@@ -76,10 +76,10 @@
 				</view>
 			</view>
 		</view>
-		<view v-if="storage" class="margin-tb-sm flex align-center bg-white flex padding-top-xs padding-bottom-sm">
-			<image src="../../static/index/title.png" mode="aspectFit" class="bg-white" 
+		<view v-if="storage" class="margin-tb-sm flex align-center bg-white flex padding-top-xs padding-bottom-sm" style="width: 1000px;">
+			<image src="../../static/index/title.png" mode="aspectFit" class="bg-white"
 			style="width: 184rpx;height: 43rpx;z-index: 99;padding:0 30rpx;"></image>
-			<view style="width: 550rpx;color: #999999;font: 26rpx;" 
+			<view style="width: 650px;color: #999999;font: 26rpx;"
 			class="padding-left-sm margin-left-sm newtimes text-df">
 				{{newTimesContent}}
 			</view>
@@ -106,14 +106,14 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view v-if="salesTop.length > 0 && storage" class="bg-white padding-lr padding-tb-sm margin-top-sm" 
+		<view v-if="salesTop.length > 0 && storage" class="bg-white padding-lr padding-tb-sm margin-top-sm"
 		@click="naviageToPage('/pages/parity/parity?title=热卖推荐')">
 			<image src="../../static/index/command.png" mode="aspectFit" style="width: 690rpx;height: 210rpx;"></image>
 		</view>
 		<view style="padding: 20rpx 12rpx 20rpx 30rpx;">
 			<view v-if="salesTop.length > 0  && storage" class="flex flex-wrap">
 				<view v-for="(item,index) in salesTop" :key="index" class="margin-bottom-sm bg-white flex align-center justify-center flex-direction"
-				 style="width: 335rpx;height: 520rpx;padding: 10rpx;margin-right: 18rpx;border-radius: 8rpx;" 
+				 style="width: 335rpx;height: 520rpx;padding: 10rpx;margin-right: 18rpx;border-radius: 8rpx;"
 				 @click="navToDetailPage(item.spuId)">
 					<image style="width: 280rpx;height: 280rpx;margin: 10rpx;" :src="item.spuImg" mode="aspectFit"></image>
 					<view style="padding-top: 28rpx;">
@@ -190,8 +190,10 @@
 				}
 			}
 			//如果用户已登录，获取购物车数量
-			if(this.$store.state.userInfo.accessToken){
-				this.$api.request('cart','countCart').then(res=>{
+			if(this.$store.state.userInfo.accessToken && this.$store.state.storageId != 0){
+				this.$api.request('cart','countCart',{
+					storageId:this.$store.state.storageId
+				}).then(res=>{
 					if(res.data > 0){
 						uni.setTabBarBadge({
 							index:2,
@@ -204,7 +206,7 @@
 					}
 					this.$store.commit('addCart',res.data)
 				}).catch(err=>{
-					// this.$api.msg('请求失败，请稍后再试')
+					this.$api.msg('请求失败，请稍后再试')
 				})
 			}
 		},
@@ -249,9 +251,13 @@
 			}).then(res=>{
 				this.indexBanner = res.data[0]
 			})
-			var [err, res1] = await uni.getLocation({
-				type: 'wgs84'
-			})
+			// var [err, res1] = await uni.getLocation({
+			// 	type: 'wgs84'
+			// })
+			var res1={}
+			res1.errMsg ='getLocation:ok'
+			res1.longitude ='11.22'
+			res1.latitude ='11.22'
 			if (res1.errMsg === 'getLocation:ok') {
 				uni.showLoading({
 					title: "加载中..."
@@ -264,17 +270,11 @@
 					this.logining = false
 					this.loaded = true
 					this.$api.msg(failres.errmsg)
-					this.$store.commit('setStorage', 11)
-					this.loadData(11)
-					if (!11) {
-						this.storage = false
-					} else {
-						this.loadRecommand('refresh')
-					}
+					this.loadRecommand('refresh')
 				}).then(res => {
 					uni.hideLoading()
 					console.log(res)
-					res.data.id = 11
+					res.data.id = res.data.id
 					this.loaded = true
 					this.$store.commit('setStorage', res.data.id)
 					this.loadData(res.data.id)
@@ -292,27 +292,8 @@
 			if (address.pois.length > 0 && address.pois[0].name.length < 8) {
 				this.district = address.pois[0].name
 			}
-			// this.district = address ? address.district : '定位失败'
 			//获取前置仓数据
 			console.log(address)
-			// this.$api.request('position','getRecentlyStorage',{
-			// 	adcode:address.adcode,lng:address.longitude,
-			// 	lat:address.latitude
-			// },failres => {
-			// 		this.logining = false
-			// 		this.$api.msg(failres.errmsg)
-			// }).then(res=>{
-			// 	console.log(res)
-			// 	// res.data.id = 11
-			// 	// this.$store.commit('setStorage',res.data.id)
-			// 	// this.loadData(res.data.id)
-			// 	// if(!res.data.id){
-			// 	// 	this.storage = false
-			// 	// }else{
-			// 	// 	this.loadRecommand('refresh')
-			// 	// }
-			// })
-			// console.log(JSON.stringify(address))
 		},
 		onPageScroll(e) {
 			e.scrollTop >= 100 ? this.appear = false : this.appear = true
@@ -380,7 +361,7 @@
 				}).then(res => {
 					let data = res.data
 					//橱窗
-					that.windowSpuList = data.windowRecommend
+					that.windowSpuList = data.cheapRecommend
 					//轮播
 					data.advertisement.t1.forEach(item => {
 						if (!item.color) {
@@ -395,11 +376,11 @@
 					}
 
 					//弹窗
-					if (data.advertisement.t5.length > 0) {
-						that.t5 = data.advertisement.t5[0]
-						this.ismask = true
-					}
-					
+					// if (data.advertisement.t5.length > 0) {
+					// 	that.t5 = data.advertisement.t5[0]
+					// 	this.ismask = true
+					// }
+
 					this.newTimesContent = data.newTimesContent
 
 
@@ -434,7 +415,7 @@
 					this.pageNo = 1
 				}
 				const that = this
-				that.$api.request('goods', 'getHotGoodsPageByStorage', {
+				that.$api.request('goods', 'getGoodsPageByStorage', {
 					storageId: this.$store.state.storageId,
 					pageNo: this.pageNo
 				}, failres => {
@@ -505,7 +486,6 @@
 						}).then(res => {
 							uni.hideLoading()
 							console.log(res)
-							// res.data.id = 11
 							this.$store.commit('setStorage', res.data.id)
 							this.newTop = []
 							this.cheapRecommend = []
@@ -634,7 +614,7 @@
 		transform: translateX(-50%) translateY(-50%) scale(1, 1);
 		transition: all .5s ease;
 	}
-	
+
 	/* 新鲜时报 */
 	.newtimes{
 		overflow: hidden;
@@ -642,12 +622,12 @@
 		box-sizing: border-box;
 		animation: marquee 15s linear infinite;
 	}
-	
+
 	@keyframes marquee {
 		0% {
 		    -webkit-transform: translateX(184rpx);
 		  }
-		
+
 		100% {
 		    -webkit-transform: translateX(-100%);
 		}
@@ -730,7 +710,7 @@
 		align-items: center;
 		flex-wrap: wrap;
 		padding-top: 34rpx;
-		// padding: 30upx 25upx; 
+		// padding: 30upx 25upx;
 		background: #fff;
 
 		.cate-item {

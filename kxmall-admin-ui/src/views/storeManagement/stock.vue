@@ -107,13 +107,13 @@
       </el-table-column>
     </el-table>
     <div class="page">
-      <el-pagination
-        :current-page="query.page"
-        :page-size="query.limit"
+      <pagination
+        v-show="total>0"
         :total="total"
-        layout="total, sizes, prev, pager, next, jumper"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"/>
+        :page.sync="query.page"
+        :limit.sync="query.limit"
+        @pagination="getList"
+      />
     </div>
 
     <!-- 编辑库存预警值 -->
@@ -144,9 +144,11 @@ import { fetchWarningList, editWarning } from '@/api/stock'
 import { categoryTree } from '@/api/category'
 import { getEntrepotList } from '@/api/entrepot'
 import { deepClone } from '@/utils'
+import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
   name: 'Stock',
+  components: { Pagination },
   data() {
     return {
       // 查询条件
@@ -217,11 +219,15 @@ export default {
     this.total = total
   },
   methods: {
-    async onSearch() {
+    onSearch() {
       this.query.page = 1
-      const { data: { data: { items, total }}} = await fetchWarningList(this.query)
-      this.list = items
-      this.total = total
+      this.getList()
+    },
+    getList() {
+      fetchWarningList(this.query).then(response => {
+        this.list = response.data.data.items
+        this.total = response.data.data.total
+      })
     },
     onEditWarnVaue(info, index) {
       this.warningDialog.visible = true

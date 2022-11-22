@@ -13,7 +13,6 @@ import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
 import com.baomidou.mybatisplus.spring.boot.starter.MybatisPlusProperties;
-import com.kxmall.market.data.interceptor.MybatisGuestOpeatorInterceptor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
@@ -83,8 +82,7 @@ public class MybatisPlusConfig {
         sqlSessionFactory.setPlugins(new Interceptor[]{
                 new PaginationInterceptor(),
                 new PerformanceInterceptor(),
-                new OptimisticLockerInterceptor(),
-                new MybatisGuestOpeatorInterceptor()
+                new OptimisticLockerInterceptor()
         });
         sqlSessionFactory.setGlobalConfig(globalConfiguration);
         return sqlSessionFactory.getObject();

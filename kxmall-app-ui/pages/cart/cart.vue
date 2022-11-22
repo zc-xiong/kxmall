@@ -106,7 +106,7 @@
 					</view>
 				</view>
 				<view class="bg-white flex justify-between align-center padding-tb-xs padding-lr"
-				style="position: fixed;bottom: 0;width: 750rpx;z-index: 99999;">
+				style="position: fixed;bottom: 50px;width: 750rpx;z-index: 99999;">
 					<view @click="cancelAllAdd" class="flex align-center">
 						<image 
 						:src="allChecked ?'/static/cart/selected.png':'/static/cart/select.png'" 
@@ -216,14 +216,19 @@
 					// stockless.forEach(item => {
 					// 	that.stockLessList.push(res.data[item])
 					// })
-					that.cartList = res.data
 					
+					that.cartList = res.data
+					if(that.cartList){
+						this.empty = false
+					}
 					that.calcTotal();  //计算总价
 					this.stockLessIds = lessIds.join(',')
 				})
 			},
 			countTabNum(){
-				this.$api.request('cart','countCart').then(res=>{
+				this.$api.request('cart','countCart',{
+					storageId:this.$store.state.storageId
+				}).then(res=>{
 					if(res.data > 0){
 						uni.setTabBarBadge({
 							index:2,
@@ -427,9 +432,9 @@
 							uni.hideLoading()
 								this.logining = false
 								this.$api.msg(failres.errmsg)
-								this.$store.commit('setStorage',11)
-								this.loadData(11)
-								if(!11){
+								this.$store.commit('setStorage',22)
+								this.loadData(22)
+								if(!22){
 									this.storage ? this.storage = false : this.storage = true
 								}else{
 									this.loadRecommand('refresh')

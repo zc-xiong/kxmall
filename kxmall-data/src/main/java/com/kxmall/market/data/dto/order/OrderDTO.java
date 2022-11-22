@@ -3,7 +3,6 @@ package com.kxmall.market.data.dto.order;
 import com.kxmall.market.data.domain.OrderDO;
 import com.kxmall.market.data.domain.OrderSkuDO;
 import com.kxmall.market.data.dto.SuperDTO;
-import com.kxmall.market.data.dto.freight.ShipTraceDTO;
 import lombok.Data;
 
 import java.util.Date;
@@ -103,9 +102,6 @@ public class OrderDTO extends SuperDTO {
     private List<OrderSkuDO> skuList;
 
     private List<OrderDO> orderList;
-
-    private ShipTraceDTO shipTraceDTO;
-
     /**
      * 总条数，便于分页
      */

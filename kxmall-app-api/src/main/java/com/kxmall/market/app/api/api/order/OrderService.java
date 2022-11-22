@@ -6,7 +6,6 @@ import com.kxmall.market.core.annotation.HttpParam;
 import com.kxmall.market.core.annotation.HttpParamType;
 import com.kxmall.market.core.annotation.param.NotNull;
 import com.kxmall.market.core.exception.ServiceException;
-import com.kxmall.market.data.dto.freight.ShipTraceDTO;
 import com.kxmall.market.data.dto.order.OrderDTO;
 import com.kxmall.market.data.dto.order.OrderRequestDTO;
 import com.kxmall.market.data.model.Page;
@@ -60,10 +59,4 @@ public interface OrderService {
     public String confirm(
             @NotNull @HttpParam(name = "orderNo", type = HttpParamType.COMMON, description = "订单号") String orderNo,
             @NotNull @HttpParam(name = "userId", type = HttpParamType.USER_ID, description = "用户Id") Long userId) throws ServiceException;
-
-    @HttpMethod(description = "查询物流")
-    public ShipTraceDTO queryShip(
-            @NotNull @HttpParam(name = "orderNo", type = HttpParamType.COMMON, description = "订单号") String orderNo,
-            @NotNull @HttpParam(name = "userId", type = HttpParamType.USER_ID, description = "用户Id") Long userId) throws ServiceException;
-
 }

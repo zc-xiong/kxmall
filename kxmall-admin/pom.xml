@@ -125,7 +125,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.kxmall.kxmall.admin.MarketAdminApplication</mainClass>
+                    <mainClass>com.kxmall.market.admin.MarketAdminApplication</mainClass>
                     <executable>true</executable>
                 </configuration>
                 <executions>

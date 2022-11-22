@@ -22,15 +22,9 @@
           </el-input>
         </el-form-item> -->
 
-        <el-form-item label="剩余库存" prop="stock">
-          <el-input v-model="goods.stock" :disabled="true" clearable placeholder="0"/>
-        </el-form-item>
-
-        <el-form-item label="运费模板" prop="freightTemplate">
-          <el-select v-model="goods.freightTemplateId" placeholder="选择商品运费模板" clearable filterable>
-            <el-option v-for="(item, index) in freightList" :key="index" :label="item.freightTemplateDO.templateName" :value="item.freightTemplateDO.id"/>
-          </el-select>
-        </el-form-item>
+<!--        <el-form-item label="剩余库存" prop="stock">-->
+<!--          <el-input v-model="goods.stock" :disabled="true" clearable placeholder="0"/>-->
+<!--        </el-form-item>-->
 
         <el-form-item label="是否在售" prop="status">
           <el-radio-group v-model="goods.status">
@@ -248,7 +242,6 @@
 <script>
 import { detailGoods, editGoods, createGoods } from '@/api/goods'
 import { categoryTree } from '@/api/category'
-import { listFreight } from '@/api/freight'
 import { uploadPath, createStorage } from '@/api/storage'
 import Editor from '@tinymce/tinymce-vue'
 import { MessageBox } from 'element-ui'
@@ -391,10 +384,6 @@ export default {
           })
         })
       })
-
-      listFreight().then(response => {
-        this.freightList = response.data.data
-      })
     },
     handleCategoryChange(value) {
       this.goods.categoryId = value[value.length - 1]
@@ -405,12 +394,7 @@ export default {
     handleCreate: function() {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
-          if (this.goods.freightTemplateId === undefined || this.goods.freightTemplateId === null) {
-            this.$notify.error({
-              title: '失败',
-              message: '请添加运费模板'
-            })
-          } else if (this.skuList.length === 0) {
+          if (this.skuList.length === 0) {
             this.$notify.error({
               title: '失败',
               message: '请添加类型（Sku）'

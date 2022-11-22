@@ -7,8 +7,8 @@ package com.kxmall.market.data.enums;
  **/
 public enum NewTimesStopType {
 
-    STOP_STATES(0, "隐藏"),
-    START_STATES(1, "显示");
+    START_STATES(0, "显示"),
+    STOP_STATES(1, "暂停");
 
     private int code;
 

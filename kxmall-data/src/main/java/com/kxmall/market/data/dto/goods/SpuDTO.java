@@ -8,7 +8,6 @@ import com.kxmall.market.data.dto.StockDTO;
 import com.kxmall.market.data.dto.StorageDTO;
 import com.kxmall.market.data.dto.SuperDTO;
 import com.kxmall.market.data.dto.appraise.AppraiseResponseDTO;
-import com.kxmall.market.data.dto.freight.FreightTemplateDTO;
 import com.kxmall.market.data.model.Page;
 import lombok.Data;
 
@@ -88,16 +87,7 @@ public class SpuDTO extends SuperDTO {
      */
     private SkuDTO skuDto;
 
-    /**
-     * 商品现在携带的团购信息
-     */
-    private GroupShopDTO groupShop;
-
     private String unit;
-
-    private Long freightTemplateId;
-
-    private FreightTemplateDTO freightTemplate;
 
     private Boolean collect;
 

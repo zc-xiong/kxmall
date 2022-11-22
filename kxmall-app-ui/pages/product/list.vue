@@ -24,7 +24,7 @@
 						<view class="">
 							<text style="font-size: 36rpx;" class="price">{{item.stockDto.price}}</text>
 							<text class="text-gray text-df" style="font-size: 24rpx;">/{{item.unit}}</text>
-							
+
 						</view>
 						<!-- <text v-if="item.spuOriginalPrice > (isVip ? item.spuVipPrice : item.spuPrice)" class="m-price">￥{{item.spuOriginalPrice / 100}}</text> -->
 						<text>{{item.sales?item.sales:0}}人已购买</text>
@@ -63,9 +63,14 @@
 			this.isVip = this.$api.isVip()
 		},
 		onLoad(options) {
-			// #ifdef H5
-			this.headerTop = document.getElementsByTagName('uni-page-head')[0].offsetHeight + 'px';
-			// #endif
+      // #ifdef H5
+      if(this.$store.state.headerTop){
+        this.headerTop = this.$store.state.headerTop
+      }else{
+        this.headerTop = document.getElementsByTagName('uni-page-head')[0].offsetHeight + 'px';
+        this.$store.state.headerTop = this.headerTop
+      }
+      // #endif
 			//cateId为0时接口无返回，改为空字符串
 			this.cateId = options.tid ? options.tid : '';
 			this.keywords = options.keywords ? options.keywords : ''

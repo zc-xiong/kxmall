@@ -2,7 +2,6 @@ package com.kxmall.market.app.api.api.user;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.kxmall.market.biz.service.activity.ActivityBizService;
 import com.kxmall.market.biz.service.user.UserBizService;
 import com.kxmall.market.core.exception.ExceptionDefinition;
 import com.kxmall.market.core.exception.AppServiceException;
@@ -64,9 +63,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private StringRedisTemplate userRedisTemplate;
 
-    @Autowired
-    private ActivityBizService activityBizService;
-
     private OkHttpClient okHttpClient = new OkHttpClient();
 
     @Value("${com.kxmall.market.wx.mini.app-id}")
@@ -89,8 +85,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String sendVerifyCode(String phone) throws ServiceException {
-        String verifyCode = GeneratorUtil.genSixVerifyCode();
-        boolean successFlag = SmsbaoSMSClient.senderSms(phone, verifyCode);
+        //String verifyCode = GeneratorUtil.genSixVerifyCode();
+        //boolean successFlag = SmsbaoSMSClient.senderSms(phone, verifyCode);
+        String verifyCode = "666666";
+        boolean successFlag = true;
         if (successFlag) {
             cacheComponent.putRaw(VERIFY_CODE_PREFIX + phone, verifyCode, 300);
             return "ok";
@@ -146,15 +144,6 @@ public class UserServiceImpl implements UserService {
         userRedisTemplate.opsForValue().set(Const.USER_REDIS_PREFIX + accessToken, JSONObject.toJSONString(userDTO));
         userDTO.setAccessToken(accessToken);
         cacheComponent.del(VERIFY_CODE_PREFIX + phone);
-        //邀请新人
-        Boolean flag = activityBizService.newRegistration(userDTO.getId(), p, ip);
-        if (flag) {
-            //如果发券成功着更新数据库
-            UserDO updateUser = new UserDO();
-            updateUser.setId(userDTO.getId());
-            updateUser.setOldMan(true);
-            userMapper.updateById(updateUser);
-        }
         return userDTO;
     }
 
@@ -346,14 +335,6 @@ public class UserServiceImpl implements UserService {
                     userRedisTemplate.opsForValue().set(Const.USER_REDIS_PREFIX + accessToken, JSONObject.toJSONString(userDTO));
                     userDTO.setSessionKey(session_key);
                     userDTO.setAccessToken(accessToken);
-                    Boolean flag = activityBizService.newRegistration(userDO.getId(), p, ip);
-                    if (flag) {
-                        //如果发券成功着更新数据库
-                        UserDO updateUser = new UserDO();
-                        updateUser.setId(userDO.getId());
-                        updateUser.setOldMan(true);
-                        userMapper.updateById(updateUser);
-                    }
                     return userDTO;
                 } else {
                     throw new AppServiceException(ExceptionDefinition.USER_PHONE_NOT_BINDING_WX);

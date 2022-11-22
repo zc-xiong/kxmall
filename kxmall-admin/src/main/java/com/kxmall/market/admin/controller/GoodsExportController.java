@@ -155,7 +155,6 @@ public class GoodsExportController {
             hashMap.put("originalPrice",spuDTO.getOriginalPrice());
             hashMap.put("detail",spuDTO.getDetail());
             hashMap.put("description",spuDTO.getDescription());
-            hashMap.put("freightTemplateId",spuDTO.getFreightTemplateId());
             hashMap.put("status",spuDTO.getStatus());
             hashMap.put("unit",spuDTO.getUnit());
             hashMap.put("spuId",spuDTO.getId());

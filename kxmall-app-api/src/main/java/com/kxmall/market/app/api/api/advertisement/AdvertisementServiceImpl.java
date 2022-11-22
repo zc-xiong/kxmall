@@ -41,7 +41,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                 wrapper.eq("ad_type", adType);
             }
             advertisementDOList = advertisementMapper.selectList(wrapper);
-            cacheComponent.putObj(ADVERTISEMENT_NAME + adType, advertisementDOList, 100);
+            cacheComponent.putObj(ADVERTISEMENT_NAME + adType, advertisementDOList, 3600);
         }
         return advertisementDOList;
     }
