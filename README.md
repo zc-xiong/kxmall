@@ -66,7 +66,8 @@ kxmall项目结构:
 - Admin后台
   - 演示地址: [http://www.kxmall.vip](http://www.kxmall.vip)
   - 登录名:guest 密码:123456 (guest仅有只读权限，无读配置权限)
-  - 登录名(超级管理员):admin (需要体验的，密码可以找群主拿，QQ群：432259672)
+  - 登录名(超级管理员):admin (需要体验的，密码可以关注公众号，回复:2)
+  ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/Publicnumber.jpg)
 - Pages
  
 ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-admin-1.png)  
