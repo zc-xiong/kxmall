@@ -25,11 +25,15 @@ kxmall项目结构:
     - kxmall-admin-ui: 基于element-ui的后台管理页面
     - kxmall-app-ui: 基于uniapp的小程序、H5、APP前端代码
     - kxmall-rider-ui: 基于uniapp的小程序、H5、APP骑手代码
-
+  
+- kxmall代码生成器-自动生成代码（独立项目）
+    - reverse-kxmall-launch: 自动生成代码启动器
+    - reverse-kxmall-ui：自动生成代码前端
+    - 下载地址 https://download.csdn.net/download/qq_38377190/87213044
 - sql: 数据库初始化SQL脚本
 
 * 阿里云折扣场：[点我进入](https://www.aliyun.com/minisite/goods?userCode=gclm7a7u)&nbsp;&nbsp;
-* 腾讯云秒杀场：[点我进入](https://curl.qcloud.com/XslPhodG)&nbsp;&nbsp;
+* 腾讯云秒杀场：[点我进入](https://url.cn/G0fq6Mm5)&nbsp;&nbsp;
 
 #### 数据库初始化sql文件，请进入讨论交流群，群文件自行下载，欢迎讨论与交流
 ---
@@ -48,8 +52,12 @@ kxmall项目结构:
 ---
 - H5客户端（可打包成小程序、APP）
   - 演示地址: [http://h5.kxmall.vip](http://h5.kxmall.vip)
-  - 登录名:13333333333 验证码:666666 
+  - 登录名:13333333333 验证码:666666 （访问请打开浏览器F12开发模式,使用手机模式进行操作）
   - 客户端由于调用地图需要https，所以程序目前固定id为11仓库
+  - 已跳过支付模块，可正常体验操作流程
+- 微信小程序-体验（可打包成小程序、APP）
+  - 已跳过支付模块，可正常体验操作流程（注意：需要自己手动获取一下定位，方可正常使用。）
+  - ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/weixin-mini.jpg)
 - Pages
 
 | 河禾生鲜 | 河禾生鲜 | 河禾生鲜 |
@@ -81,7 +89,7 @@ kxmall项目结构:
 ---
 - h5骑手后台（可打包成小程序、APP）
   - 演示地址: [http://rider.kxmall.vip](http://rider.kxmall.vip)
-  - 登录名:16666666666 验证码:123456 
+  - 登录名:16666666666 验证码:123456 （访问请打开浏览器F12开发模式,使用手机模式进行操作）
 - Pages
 
 | 河禾生鲜 | 河禾生鲜 | 河禾生鲜 |
@@ -118,6 +126,23 @@ Redis安装可直接使用yum安装
 
 [kxmall本地项目启动文档](doc/kxmall本地项目启动文档.doc)
 
+### 生鲜多商户商城上线拉！！！！！
+---
+| kxmalls客户端 | kxmalls骑手端 |
+| :----: | :----: |
+| ![生鲜多商户](https://kxmalls.oss-cn-hangzhou.aliyuncs.com/kxmalls1.png)  |  ![生鲜多商户](https://kxmalls.oss-cn-hangzhou.aliyuncs.com/kxmalls2.png) |
+
+体验账号（了解加QQ群：587493946）（体验流程，可使用余额支付）
+
+客户端 http://175.178.228.217/#/login
+
+商家账号 账号：小黑水果生鲜  密码： 123456
+
+超级管理员  admin 账号密码 （私聊群主）
+
+客户端   http://175.178.228.217:8080/   账号 16666666666  密码 123456
+
+骑手端   http://175.178.228.217:8181/   账号 13333333333   密码 123456
 
 #### 版权声明
 
